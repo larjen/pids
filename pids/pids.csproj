@@ -94,10 +94,40 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="css\nvd3.css" />
+    <Content Include="d3-natural.html" />
+    <Content Include="graph.js" />
+    <Content Include="images\android-desktop.png" />
+    <Content Include="images\android-logo-white.png" />
+    <Content Include="images\android-logo.png" />
+    <Content Include="images\andy.png" />
+    <Content Include="images\auto-on.jpg" />
+    <Content Include="images\devices.jpg" />
+    <Content Include="images\dog.png" />
+    <Content Include="images\favicon.png" />
+    <Content Include="gulpfile.js" />
+    <Content Include="images\ios-desktop.png" />
+    <Content Include="images\more-from-1.png" />
+    <Content Include="images\more-from-2.png" />
+    <Content Include="images\more-from-3.png" />
+    <Content Include="images\more-from-4.png" />
+    <Content Include="images\nexus6-on.jpg" />
+    <Content Include="images\nexus9-on.jpg" />
+    <Content Include="images\slide01.jpg" />
+    <Content Include="images\tv-on.jpg" />
+    <Content Include="images\wear-black-on.png" />
+    <Content Include="images\wear-silver-on.png" />
+    <Content Include="images\wear.png" />
     <Content Include="packages.config" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="package.json" />
+    <Content Include="scripts\d3\d3.js" />
+    <Content Include="scripts\d3\d3.min.js" />
+    <Content Include="scripts\d3\LICENSE" />
+    <Content Include="cumulativeLineData.json" />
+    <Content Include="pids_data.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -109,11 +139,15 @@
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="images\user.jpg" />
+    <Content Include="scripts\nvd3\nv.d3.min.js" />
+    <Content Include="styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

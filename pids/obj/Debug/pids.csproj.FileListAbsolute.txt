@@ -28,6 +28,6 @@ C:\Users\xlje\Documents\GitHub\pids\pids\bin\Microsoft.AI.Web.xml
 C:\Users\xlje\Documents\GitHub\pids\pids\bin\Microsoft.AI.WindowsServer.xml
 C:\Users\xlje\Documents\GitHub\pids\pids\bin\Microsoft.ApplicationInsights.xml
 C:\Users\xlje\Documents\GitHub\pids\pids\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\xlje\Documents\GitHub\pids\pids\obj\Debug\pids.csprojResolveAssemblyReference.cache
 C:\Users\xlje\Documents\GitHub\pids\pids\obj\Debug\pids.dll
 C:\Users\xlje\Documents\GitHub\pids\pids\obj\Debug\pids.pdb
+C:\Users\xlje\Documents\GitHub\pids\pids\obj\Debug\pids.csprojResolveAssemblyReference.cache

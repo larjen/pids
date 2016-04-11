@@ -1,0 +1,691 @@
+﻿{
+  "request_parameters": {
+    "company": "WEYLAND-YUTANI",
+    "at_code": "321",
+    "geo_reqion": "EMEA"
+  },
+  "company": [
+    {
+      "name": "WEYLAND-YUTANI",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111"
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    }
+  ],
+  "product": [
+    {
+      "name": "AALDERAN",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111",
+        "patent": {
+          "end_date": "20230606",
+          "start_date": "20120505"
+        }
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    },
+    {
+      "name": "BOSPHERUS",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111",
+        "patent": {
+          "end_date": "20230606",
+          "start_date": "20120505"
+        }
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    },
+    {
+      "name": "FLORADANICA",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111",
+        "patent": {
+          "end_date": "20230606",
+          "start_date": "20120505"
+        }
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    },
+    {
+      "name": "ACKBAR",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111",
+        "patent": {
+          "end_date": "20230606",
+          "start_date": "20120505"
+        }
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    },
+    {
+      "name": "UNOBTANIUM",
+      "properties": {
+        "Evolution Index": "90",
+        "Market Share %": "84%",
+        "Market Growth %": "4",
+        "Growth %": "-3",
+        "sales": "EUR 234.231.111",
+        "patent": {
+          "end_date": "20230606",
+          "start_date": "20120505"
+        }
+      },
+      "market_share": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ],
+      "mat": [
+        {
+          "month": 20130101,
+          "sales": 38
+        },
+        {
+          "month": 20130201,
+          "sales": 35
+        },
+        {
+          "month": 20130301,
+          "sales": 41
+        },
+        {
+          "month": 20130401,
+          "sales": 55
+        },
+        {
+          "month": 20130501,
+          "sales": 58
+        },
+        {
+          "month": 20130601,
+          "sales": 66
+        },
+        {
+          "month": 20130701,
+          "sales": 74
+        },
+        {
+          "month": 20130801,
+          "sales": 78
+        },
+        {
+          "month": 20130901,
+          "sales": 38
+        },
+        {
+          "month": 20131001,
+          "sales": 30
+        },
+        {
+          "month": 20131101,
+          "sales": 26
+        },
+        {
+          "month": 20131201,
+          "sales": 29
+        }
+      ]
+    }
+  ]
+}
