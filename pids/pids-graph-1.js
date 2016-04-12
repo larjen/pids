@@ -18,11 +18,11 @@ var pidsGraph = {
         console.log("DATA RECIEVED");
         console.log(dataSet);
     },
-    renderMarketShareCompany: function(){
-       
+    renderMarketShareCompany: function () {
+
     },
 
-    getLowHighNumber: function (dataSet){
+    getLowHighNumber: function (dataSet) {
         console.log("Now finding largest number:");
         console.log(dataSet);
         var largestNumber = dataSet[0].sales;
@@ -32,16 +32,28 @@ var pidsGraph = {
                 largestNumber = dataSet[i].sales;
             }
             if (dataSet[i].sales < lowestNumber) {
-                largestNumber = dataSet[i].sales;
+                lowestNumber = dataSet[i].sales;
             }
-            console.log(largestNumber);
+            console.log(largestNumber, lowestNumber);
         }
         return { "higest": largestNumber, "lowest": lowestNumber };
     },
 
+    getDate: function(s){
+        var strDate = new String(s);
+        var year = strDate.substr(0, 4);
+        var month = strDate.substr(4, 2);
+        var day = strDate.substr(6, 2);
+        return new Date(year, month, day);
+    },
 
+    drawLine: function (svg, ) {
 
-    drawLine: function () {
+        var self = this;
+
+        var svg = d3.select("#market-share-container").append("svg").attr({
+            width: this.width, height: this.height
+        });
 
         //var lineFun = d3.svg.line()
         //.x(function (d) { return d.month * 2; })
@@ -49,25 +61,48 @@ var pidsGraph = {
         //.interpolate("linear");
         var ds = this.dataSet.company[0].market_share;
 
-        var rangeY = this.getLowHighNumber(ds);
+        //var rangeY = this.getLowHighNumber(ds);
 
-        var maxY = rangeY.highest;
-        var minY = rangeY.lowest;
+        //console.log("rangeY", rangeY);
 
-        var yScale ) d3.scale.linear.range([])
+        console.log("MIN sales", d3.min(ds, function (d) { return d.sales; }));
+        console.log("MAX sales", d3.max(ds, function (d) { return d.sales; }));
+        console.log("MIN month", this.getDate(d3.min(ds, function (d) { return d.month; })));
+        console.log("MAX month", this.getDate(d3.max(ds, function (d) { return d.month; })));
 
-        yScale.domain([yMin, yMax]);
+        var xScale = d3.time.scale()
+            .domain([
+            this.getDate(d3.min(ds, function (d) { return d.month; })),
+            this.getDate(d3.max(ds, function (d) { return d.month; }))
+            ])
+            .range([this.padding, this.width - this.padding])
+            .nice();
 
-        
+        var yScale = d3.scale.linear()
+            .domain([
+                d3.min(ds, function (d) { return d.sales; }),
+                d3.max(ds, function (d) { return d.sales; })
+            ])
+            .range([this.height-this.padding, this.padding])
+            .nice();
+
+        var yAxisGen = d3.svg.axis().scale(yScale).orient("left").ticks(5);
+        var xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%b"));
+
         var lineFun = d3.svg.line()
-          .x(function (d) { return ((d.month - 20130001) / 1.25); })
-          .y(function (d) { return h - d.sales; })
+          .x(function (d) { return xScale(self.getDate(d.month)); })
+          .y(function (d) { return yScale(d.sales); })
           .interpolate("linear");
 
+        var yAxis = svg.append("g").call(yAxisGen)
+            .attr("class", "axis")
+            .attr("transform", "translate(" + this.padding + ",0)");
 
-        var svg = d3.select("#market-share-container").append("svg").attr({
-            width: this.width, height: this.height
-        });
+        var xAxis = svg.append("g").call(xAxisGen)
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (this.height - this.padding) + ")");
+
+
 
         console.log('DATAPOINT');
         console.log();
@@ -78,6 +113,16 @@ var pidsGraph = {
             "stroke": "purple",
             "stroke-width": 2,
             "fill": "none"
-    });
+        });
+    },
+    renderGraphs: function(dataSet){
+
+        // this function draws all graphs
+
+        // first set the dataSet
+        this.dataSet = dataSet;
+
+        // first draw the marketshare graph
+
     }
 }
