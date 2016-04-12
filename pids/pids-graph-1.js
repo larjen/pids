@@ -47,7 +47,7 @@ var pidsGraph = {
         return new Date(year, month, day);
     },
 
-    drawLine: function (svg, ) {
+    drawLine: function () {
 
         var self = this;
 
@@ -69,6 +69,11 @@ var pidsGraph = {
         console.log("MAX sales", d3.max(ds, function (d) { return d.sales; }));
         console.log("MIN month", this.getDate(d3.min(ds, function (d) { return d.month; })));
         console.log("MAX month", this.getDate(d3.max(ds, function (d) { return d.month; })));
+
+        // add tooltip
+        var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
 
         var xScale = d3.time.scale()
             .domain([
@@ -95,11 +100,11 @@ var pidsGraph = {
           .interpolate("linear");
 
         var yAxis = svg.append("g").call(yAxisGen)
-            .attr("class", "axis")
+            .attr("class", "y-axis")
             .attr("transform", "translate(" + this.padding + ",0)");
 
         var xAxis = svg.append("g").call(xAxisGen)
-            .attr("class", "axis")
+            .attr("class", "x-axis")
             .attr("transform", "translate(0," + (this.height - this.padding) + ")");
 
 
@@ -113,6 +118,31 @@ var pidsGraph = {
             "stroke": "purple",
             "stroke-width": 2,
             "fill": "none"
+        });
+
+        var dots = svg.selectAll("circle")
+        .data(ds)
+        .enter()
+        .append("circle")
+        .attr({
+            cx: function (d) { return xScale(self.getDate(d.month)); },
+            cy: function (d) { return yScale(d.sales); },
+            r: 4,
+            "fill": "#00ff88",
+            class: "circle-"+ds.category
+        })
+        .on("mouseover", function (d) {
+            tooltip.transition()
+            .duration(500)
+            .style("opacity", .85)
+            tooltip.html("<strong>sales " + d.sales + "</strong>")
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 20) + "px");
+        })
+        .on("mouseout", function (d) {
+            tooltip.transition()
+            .duration(500)
+            .style("opacity", 0);
         });
     },
     renderGraphs: function(dataSet){

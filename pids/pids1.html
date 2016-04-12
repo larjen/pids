@@ -34,14 +34,29 @@
     </script>
 
     <style>
-        .axis path,
-        .axis line {
+        .y-axis path,
+        .x-axis path,
+        .y-axis line,
+        .x-axis line {
             fill: none;
             stroke: black;
             shape-rendering: crispEdges;
         }
-        .axis text {
+        .y-axis text,
+        .x-axis text {
             
+        }
+
+        div.tooltip {
+            position: absolute;
+            max-width: 200px;
+            height: auto;
+            padding: 5px;
+            background-color: yellow;
+            border-radius: 5px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+            font-size: 10px;
         }
     </style>
     <!-- demo scripting-->
