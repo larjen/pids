@@ -6,114 +6,131 @@
   },
   "company": [
     {
-      "name": "WEYLAND-YUTANI",
+      "datasets": [
+        {
+          "type": "marketshare",
+          "name": "Market Share %",
+          "x-label": "Month",
+          "y-label": "Market Share %",
+          "description": "The marketshare in % for the company",
+          "data": [
+            {
+              "x": 20130101,
+              "y": 38
+            },
+            {
+              "x": 20130201,
+              "y": 35
+            },
+            {
+              "x": 20130301,
+              "y": 41
+            },
+            {
+              "x": 20130401,
+              "y": 55
+            },
+            {
+              "x": 20130501,
+              "y": 58
+            },
+            {
+              "x": 20130601,
+              "y": 66
+            },
+            {
+              "x": 20130701,
+              "y": 74
+            },
+            {
+              "x": 20130801,
+              "y": 78
+            },
+            {
+              "x": 20130901,
+              "y": 38
+            },
+            {
+              "x": 20131001,
+              "y": 30
+            },
+            {
+              "x": 20131101,
+              "y": 26
+            },
+            {
+              "x": 20131201,
+              "y": 29
+            }
+          ]
+        },
+        {
+          "type": "mat",
+          "name": "MAT",
+          "x-label": "Month",
+          "y-label": "MAT",
+          "description": "The evolution index for the company",
+          "data": [
+            {
+              "x": 20130101,
+              "y": 234
+            },
+            {
+              "x": 20130201,
+              "y": 232
+            },
+            {
+              "x": 20130301,
+              "y": 655
+            },
+            {
+              "x": 20130401,
+              "y": 454
+            },
+            {
+              "x": 20130501,
+              "y": 343
+            },
+            {
+              "x": 20130601,
+              "y": 342
+            },
+            {
+              "x": 20130701,
+              "y": 133
+            },
+            {
+              "x": 20130801,
+              "y": -23
+            },
+            {
+              "x": 20130901,
+              "y": -102
+            },
+            {
+              "x": 20131001,
+              "y": 22
+            },
+            {
+              "x": 20131101,
+              "y": 122
+            },
+            {
+              "x": 20131201,
+              "y": 332
+            }
+          ]
+        }
+      ],
       "properties": {
+        "type": "company",
+        "name": "Weyland-Yutani",
         "Evolution Index": "90",
         "Market Share %": "84%",
         "Market Growth %": "4",
         "Growth %": "-3",
         "sales": "EUR 234.231.111"
-      },
-      "market_share": [
-        {
-          "month": 20130101,
-          "sales": 38
-        },
-        {
-          "month": 20130201,
-          "sales": 35
-        },
-        {
-          "month": 20130301,
-          "sales": 41
-        },
-        {
-          "month": 20130401,
-          "sales": 55
-        },
-        {
-          "month": 20130501,
-          "sales": 58
-        },
-        {
-          "month": 20130601,
-          "sales": 66
-        },
-        {
-          "month": 20130701,
-          "sales": 74
-        },
-        {
-          "month": 20130801,
-          "sales": 78
-        },
-        {
-          "month": 20130901,
-          "sales": 38
-        },
-        {
-          "month": 20131001,
-          "sales": 30
-        },
-        {
-          "month": 20131101,
-          "sales": 26
-        },
-        {
-          "month": 20131201,
-          "sales": 29
-        }
-      ],
-      "mat": [
-        {
-          "month": 20130101,
-          "sales": 38
-        },
-        {
-          "month": 20130201,
-          "sales": 35
-        },
-        {
-          "month": 20130301,
-          "sales": 41
-        },
-        {
-          "month": 20130401,
-          "sales": 55
-        },
-        {
-          "month": 20130501,
-          "sales": 58
-        },
-        {
-          "month": 20130601,
-          "sales": 66
-        },
-        {
-          "month": 20130701,
-          "sales": 74
-        },
-        {
-          "month": 20130801,
-          "sales": 78
-        },
-        {
-          "month": 20130901,
-          "sales": 38
-        },
-        {
-          "month": 20131001,
-          "sales": 30
-        },
-        {
-          "month": 20131101,
-          "sales": 26
-        },
-        {
-          "month": 20131201,
-          "sales": 29
-        }
-      ]
+      }
     }
   ],
   "product": [
