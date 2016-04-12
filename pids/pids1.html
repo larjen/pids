@@ -26,8 +26,10 @@
         url: "pids_data.json",
         success: function(data, textStatus, jqXHR){
 
-            pidsGraph.setDataSet(data);
-            pidsGraph.drawLine();
+            //pidsGraph.setDataSet(data);
+            //pidsGraph.drawLine();
+
+            pidsGraph.renderGraphs(data);
         }
     });
 
@@ -58,79 +60,7 @@
             pointer-events: none;
             font-size: 10px;
         }
-    </style>
-    <!-- demo scripting-->
-    <script>
-        var h = 100;
-        var w = 400;
-
-
-        function showHeader(ds) {
-
-            d3.select("body").append("h1")
-                .text(ds.category + " Sales (2013)");
-
-        }
-
-        function buildLine(ds) {
-
-            console.log("ds", ds);
-
-
-            var lineFun = d3.svg.line()
-              .x(function (d) { return ((d.month - 20130001) / 1.25); })
-              .y(function (d) { return h - d.sales; })
-              .interpolate("linear");
-
-            //var lineFun = d3.svg.line()
-            // .x(function (d) { return ((d.month - 20130001) / 3.25); })
-            // .y(function (d) { return h - d.sales; })
-            // .interpolate("linear");
-
-            var svg = d3.select("body").append("svg").attr({ width: w, height: h });
-
-            var viz = svg.append("path")
-              .attr({
-                  d: lineFun(ds.monthlySales), //we have to refernce the sales data array
-                  "stroke": "purple",
-                  "stroke-width": 2,
-                  "fill": "none"
-              });
-
-        }
-
-
-        //call to load data and then build our viz
-        d3.json("https://api.github.com/repos/bsullins/d3js-resources/contents/monthlySalesbyCategoryMultiple.json", function (error, data) {
-
-            //check the file loaded properly
-            if (error) {
-                console.log(error);
-            } else {
-                console.log(data);  //raw data
-            }
-
-            //decode our base64 data
-            //and convert it into an array
-            var decodedData = JSON.parse(window.atob(data.content));
-
-            //see what we've got
-            //should be [Object, Object]
-            console.log(decodedData.contents);
-
-
-            decodedData.contents.forEach(function (ds) {
-                console.log(ds);
-                showHeader(ds); //give our chart a title
-                buildLine(ds); //draw our line
-            });
-
-
-
-
-        });
-
-    </script>
+    </style>   
 </head>
 <body>
 
@@ -283,7 +213,7 @@
             <div class="col-md-12">
                 <h3>Market share %</h3>
             </div>
-            <div class="col-md-12" id="market-share-container">
+            <div class="col-md-12" id="marketshare">
 
             </div>
         </div>

@@ -47,13 +47,42 @@ var pidsGraph = {
         return new Date(year, month, day);
     },
 
-    drawLine: function () {
+    getSvg: function (ds) {
+
+        // create or get the reference to the svg object for the type of dataset
+        var svgIdentifier = ds.type;
+        console.log("svgIdentifier", svgIdentifier);
+
+        var svg = d3.select("svg#" + svgIdentifier);
+
+        console.log('svg', svg[0][0]);
+
+        if (svg[0][0] === null) {
+
+            // create the svg to hold the graph and return the svg
+
+            svg = d3.select("#" + svgIdentifier).append("svg").attr({
+                width: this.width,
+                height: this.height,
+                id: svgIdentifier
+            });
+        }
+        return svg;
+    },
+
+
+    /*
+
+    Draw one line from a dataset
+
+    */
+    drawLine: function (ds) {
 
         var self = this;
 
-        var svg = d3.select("#market-share-container").append("svg").attr({
-            width: this.width, height: this.height
-        });
+        var svg = this.getSvg(ds);
+
+
 
         //var lineFun = d3.svg.line()
         //.x(function (d) { return d.month * 2; })
@@ -149,10 +178,18 @@ var pidsGraph = {
 
         // this function draws all graphs
 
+        console.log(dataSet);
+
         // first set the dataSet
         this.dataSet = dataSet;
 
         // first draw the marketshare graph
 
+        // THIS IS THE HARDCODED PARTS THAT NEEDS TO BE DYNAMIC
+        
+        var ds = dataSet.company[0].datasets[0];
+        console.log(ds);
+
+        this.drawLine(ds);
     }
 }
