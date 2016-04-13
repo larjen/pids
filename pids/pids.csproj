@@ -131,6 +131,7 @@
     <Content Include="scripts\d3\LICENSE" />
     <Content Include="cumulativeLineData.json" />
     <Content Include="pids_data.json" />
+    <Content Include="README.md" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -10,8 +10,7 @@ var pidsGraph = {
     width: 940,
     height: 400,
     padding: 50,
-    xScales: [], // holds the calculated x scales
-    yScales: [], // holds the calculated y scales
+    scales: [], // holds the calculated scales
     xMin: [],
     yMin: [],
     xMax: [],
@@ -63,7 +62,33 @@ var pidsGraph = {
         }
         return svg;
     },
+    getScales: function(ds){
 
+        // get scal
+        if (this.scales[ds.chartid] === undefined) {
+
+            var xScale = d3.time.scale()
+            .domain([
+                this.xMin[ds.chartid],
+                this.xMax[ds.chartid]
+            ])
+            .range([this.padding, this.width - this.padding])
+            .nice();
+
+            var yScale = d3.scale.linear()
+                .domain([
+                    this.yMin[ds.chartid],
+                    this.yMax[ds.chartid]
+                ])
+                .range([this.height - this.padding, this.padding])
+                .nice();
+
+            this.scales[ds.chartid] = { x: xScale, y: yScale };
+
+        }
+        
+        return this.scales[ds.chartid];
+    },
 
     /*
 
@@ -88,38 +113,42 @@ var pidsGraph = {
 
         //console.log("rangeY", rangeY);
 
-        console.log("MIN sales", d3.min(ds.data, function (d) { return d.y; }));
-        console.log("MAX sales", d3.max(ds.data, function (d) { return d.y; }));
-        console.log("MIN month", this.getDate(d3.min(ds.data, function (d) { return d.x; })));
-        console.log("MAX month", this.getDate(d3.max(ds.data, function (d) { return d.x; })));
+        //console.log("MIN sales", d3.min(ds.data, function (d) { return d.y; }));
+        //console.log("MAX sales", d3.max(ds.data, function (d) { return d.y; }));
+        //console.log("MIN month", this.getDate(d3.min(ds.data, function (d) { return d.x; })));
+        //console.log("MAX month", this.getDate(d3.max(ds.data, function (d) { return d.x; })));
 
         // add tooltip
         var tooltip = d3.select("body").append("div")
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-        var xScale = d3.time.scale()
-            .domain([
-                self.xMin[ds.chartid],
-                self.xMax[ds.chartid]
-            ])
-            .range([this.padding, this.width - this.padding])
-            .nice();
+        var scale = this.getScales(ds);
 
-        var yScale = d3.scale.linear()
-            .domain([
-                self.yMin[ds.chartid],
-                self.yMax[ds.chartid]
-            ])
-            .range([this.height - this.padding, this.padding])
-            .nice();
 
-        var yAxisGen = d3.svg.axis().scale(yScale).orient("left").ticks(5);
-        var xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%b"));
+
+       // var xScale = d3.time.scale()
+      //      .domain([
+      //          self.xMin[ds.chartid],
+       //         self.xMax[ds.chartid]
+       //     ])
+       //     .range([this.padding, this.width - this.padding])
+      //      .nice();
+
+       // var yScale = d3.scale.linear()
+       //     .domain([
+       //         self.yMin[ds.chartid],
+       //         self.yMax[ds.chartid]
+       //     ])
+       //     .range([this.height - this.padding, this.padding])
+       //     .nice();
+
+        var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
+        var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
 
         var lineFun = d3.svg.line()
-          .x(function (d) { return xScale(self.getDate(d.x)); })
-          .y(function (d) { return yScale(d.y); })
+          .x(function (d) { return scale.x(self.getDate(d.x)); })
+          .y(function (d) { return scale.y(d.y); })
           .interpolate("linear");
 
         var yAxis = svg.append("g").call(yAxisGen)
@@ -143,8 +172,8 @@ var pidsGraph = {
         .enter()
         .append("circle")
         .attr({
-            cx: function (d) { return xScale(self.getDate(d.x)); },
-            cy: function (d) { return yScale(d.y); },
+            cx: function (d) { return scale.x(self.getDate(d.x)); },
+            cy: function (d) { return scale.y(d.y); },
             r: 4,
             "fill": "#00ff88",
             class: "circle-"+ds.entityid
@@ -187,11 +216,7 @@ var pidsGraph = {
         // iterate over the charts and create the yScale
 
         for (var i = 0; chartData[chartIds[i]] !== undefined; i++) {
-
-
-
             console.log("chartData[i]", chartData[chartIds[i]]);
-
             console.log("MIN y " + chartIds[i], d3.min(chartData[chartIds[i]], function (d) { return d.y; }));
 
             this.yMin[chartIds[i]] = d3.min(chartData[chartIds[i]], function (d) { return d.y; });
