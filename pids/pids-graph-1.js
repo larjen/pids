@@ -10,6 +10,12 @@ var pidsGraph = {
     width: 940,
     height: 400,
     padding: 50,
+    xScales: [], // holds the calculated x scales
+    yScales: [], // holds the calculated y scales
+    xMin: [],
+    yMin: [],
+    xMax: [],
+    yMax: [],
     setDataSet: function (dataSet) {
 
         // sets the dataset into the object
@@ -22,22 +28,7 @@ var pidsGraph = {
 
     },
 
-    getLowHighNumber: function (dataSet) {
-        console.log("Now finding largest number:");
-        console.log(dataSet);
-        var largestNumber = dataSet[0].sales;
-        var lowestNumber = dataSet[0].sales;
-        for (var i = 0; i < dataSet.length; i++) {
-            if (dataSet[i].sales > largestNumber) {
-                largestNumber = dataSet[i].sales;
-            }
-            if (dataSet[i].sales < lowestNumber) {
-                lowestNumber = dataSet[i].sales;
-            }
-            console.log(largestNumber, lowestNumber);
-        }
-        return { "higest": largestNumber, "lowest": lowestNumber };
-    },
+
 
     getDate: function(s){
         var strDate = new String(s);
@@ -109,18 +100,18 @@ var pidsGraph = {
 
         var xScale = d3.time.scale()
             .domain([
-            this.getDate(d3.min(ds.data, function (d) { return d.x; })),
-            this.getDate(d3.max(ds.data, function (d) { return d.x; }))
+                self.xMin[ds.chartid],
+                self.xMax[ds.chartid]
             ])
             .range([this.padding, this.width - this.padding])
             .nice();
 
         var yScale = d3.scale.linear()
             .domain([
-                d3.min(ds.data, function (d) { return d.y; }),
-                d3.max(ds.data, function (d) { return d.y; })
+                self.yMin[ds.chartid],
+                self.yMax[ds.chartid]
             ])
-            .range([this.height-this.padding, this.padding])
+            .range([this.height - this.padding, this.padding])
             .nice();
 
         var yAxisGen = d3.svg.axis().scale(yScale).orient("left").ticks(5);
@@ -172,6 +163,61 @@ var pidsGraph = {
             .style("opacity", 0);
         });
     },
+
+    calculateScales: function (dataSet) {
+
+        var chartData = [];
+
+        for (var i = 0; i < this.dataSet.datasets.length; i++) {
+            console.log(this.dataSet.datasets[i].chartid);
+
+            // concat all ydata for same char
+
+            if (chartData[this.dataSet.datasets[i].chartid] === undefined) {
+                chartData[this.dataSet.datasets[i].chartid] = this.dataSet.datasets[i].data;
+                console.log("array must be created", this.dataSet.datasets[i].chartid);
+            } else {
+                console.log("array mereged", this.dataSet.datasets[i].chartid);
+                chartData[this.dataSet.datasets[i].chartid] = chartData[this.dataSet.datasets[i].chartid].concat(this.dataSet.datasets[i].data);
+            }
+        }
+
+        var chartIds = Object.keys(chartData);
+        console.log("chartIds",chartIds);
+        // iterate over the charts and create the yScale
+
+        for (var i = 0; chartData[chartIds[i]] !== undefined; i++) {
+
+
+
+            console.log("chartData[i]", chartData[chartIds[i]]);
+
+            console.log("MIN y " + chartIds[i], d3.min(chartData[chartIds[i]], function (d) { return d.y; }));
+
+            this.yMin[chartIds[i]] = d3.min(chartData[chartIds[i]], function (d) { return d.y; });
+
+            console.log("MAX y " + chartIds[i], d3.max(chartData[chartIds[i]], function (d) { return d.y; }));
+
+            this.yMax[chartIds[i]] = d3.max(chartData[chartIds[i]], function (d) { return d.y; });
+
+            console.log("MIN x " + chartIds[i], this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; })));
+
+            this.xMin[chartIds[i]] = this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; }));
+
+            console.log("MAX x "+chartIds[i], this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; })));
+
+            this.xMax[chartIds[i]] = this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; }));
+
+
+        };
+
+
+
+
+
+    },
+
+
     renderGraphs: function(dataSet){
 
         // this function draws all graphs
@@ -183,6 +229,10 @@ var pidsGraph = {
 
         //console.log("Now drawing dataset:", this.dataSet.datasets);
         //console.log("Now drawing dataset:", this.dataSet.datasets.length);
+
+        // calculate all the y scales for the graphs in the datasets
+
+        this.calculateScales(dataSet);
 
 
         // draw every graph
