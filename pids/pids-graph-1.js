@@ -49,11 +49,14 @@ var pidsGraph = {
 
     getSvg: function (ds) {
 
-        // create or get the reference to the svg object for the type of dataset
-        var svgIdentifier = ds.type;
-        console.log("svgIdentifier", svgIdentifier);
+        console.log("getSvg", ds);
 
-        var svg = d3.select("svg#" + svgIdentifier);
+
+        // create or get the reference to the svg object for the type of dataset
+        var chartid = ds.chartid;
+        console.log("chartid", chartid);
+
+        var svg = d3.select("svg#svg-" + chartid);
 
         console.log('svg', svg[0][0]);
 
@@ -61,10 +64,10 @@ var pidsGraph = {
 
             // create the svg to hold the graph and return the svg
 
-            svg = d3.select("#" + svgIdentifier).append("svg").attr({
+            svg = d3.select("#" + chartid).append("svg").attr({
                 width: this.width,
                 height: this.height,
-                id: svgIdentifier
+                id: "svg-"+chartid
             });
         }
         return svg;
@@ -88,16 +91,16 @@ var pidsGraph = {
         //.x(function (d) { return d.month * 2; })
         //.y(function (d) { return d.sales; })
         //.interpolate("linear");
-        var ds = this.dataSet.company[0].market_share;
+        //var ds = this.dataSet.company[0].market_share;
 
         //var rangeY = this.getLowHighNumber(ds);
 
         //console.log("rangeY", rangeY);
 
-        console.log("MIN sales", d3.min(ds, function (d) { return d.sales; }));
-        console.log("MAX sales", d3.max(ds, function (d) { return d.sales; }));
-        console.log("MIN month", this.getDate(d3.min(ds, function (d) { return d.month; })));
-        console.log("MAX month", this.getDate(d3.max(ds, function (d) { return d.month; })));
+        console.log("MIN sales", d3.min(ds.data, function (d) { return d.y; }));
+        console.log("MAX sales", d3.max(ds.data, function (d) { return d.y; }));
+        console.log("MIN month", this.getDate(d3.min(ds.data, function (d) { return d.x; })));
+        console.log("MAX month", this.getDate(d3.max(ds.data, function (d) { return d.x; })));
 
         // add tooltip
         var tooltip = d3.select("body").append("div")
@@ -106,16 +109,16 @@ var pidsGraph = {
 
         var xScale = d3.time.scale()
             .domain([
-            this.getDate(d3.min(ds, function (d) { return d.month; })),
-            this.getDate(d3.max(ds, function (d) { return d.month; }))
+            this.getDate(d3.min(ds.data, function (d) { return d.x; })),
+            this.getDate(d3.max(ds.data, function (d) { return d.x; }))
             ])
             .range([this.padding, this.width - this.padding])
             .nice();
 
         var yScale = d3.scale.linear()
             .domain([
-                d3.min(ds, function (d) { return d.sales; }),
-                d3.max(ds, function (d) { return d.sales; })
+                d3.min(ds.data, function (d) { return d.y; }),
+                d3.max(ds.data, function (d) { return d.y; })
             ])
             .range([this.height-this.padding, this.padding])
             .nice();
@@ -124,8 +127,8 @@ var pidsGraph = {
         var xAxisGen = d3.svg.axis().scale(xScale).orient("bottom").tickFormat(d3.time.format("%b"));
 
         var lineFun = d3.svg.line()
-          .x(function (d) { return xScale(self.getDate(d.month)); })
-          .y(function (d) { return yScale(d.sales); })
+          .x(function (d) { return xScale(self.getDate(d.x)); })
+          .y(function (d) { return yScale(d.y); })
           .interpolate("linear");
 
         var yAxis = svg.append("g").call(yAxisGen)
@@ -136,35 +139,30 @@ var pidsGraph = {
             .attr("class", "x-axis")
             .attr("transform", "translate(0," + (this.height - this.padding) + ")");
 
-
-
-        console.log('DATAPOINT');
-        console.log();
-
         var viz = svg.append("path")
         .attr({
-            d: lineFun(ds),
+            d: lineFun(ds.data),
             "stroke": "purple",
             "stroke-width": 2,
             "fill": "none"
         });
 
         var dots = svg.selectAll("circle")
-        .data(ds)
+        .data(ds.data)
         .enter()
         .append("circle")
         .attr({
-            cx: function (d) { return xScale(self.getDate(d.month)); },
-            cy: function (d) { return yScale(d.sales); },
+            cx: function (d) { return xScale(self.getDate(d.x)); },
+            cy: function (d) { return yScale(d.y); },
             r: 4,
             "fill": "#00ff88",
-            class: "circle-"+ds.category
+            class: "circle-"+ds.entityid
         })
         .on("mouseover", function (d) {
             tooltip.transition()
             .duration(500)
             .style("opacity", .85)
-            tooltip.html("<strong>sales " + d.sales + "</strong>")
+            tooltip.html("<strong>sales " + d.y + "</strong>")
             .style("left", (d3.event.pageX) + "px")
             .style("top", (d3.event.pageY - 20) + "px");
         })
@@ -183,13 +181,26 @@ var pidsGraph = {
         // first set the dataSet
         this.dataSet = dataSet;
 
-        // first draw the marketshare graph
+        //console.log("Now drawing dataset:", this.dataSet.datasets);
+        //console.log("Now drawing dataset:", this.dataSet.datasets.length);
+
+
+        // draw every graph
+
+        for (var i = 0; i < this.dataSet.datasets.length; i++) {
+
+            console.log("Now drawing dataset:", this.dataSet.datasets[i]);
+            this.drawLine(this.dataSet.datasets[i]);
+
+            
+        }
+
 
         // THIS IS THE HARDCODED PARTS THAT NEEDS TO BE DYNAMIC
         
-        var ds = dataSet.company[0].datasets[0];
-        console.log(ds);
+        //var ds = dataSet.company[0].datasets[0];
+        //console.log(ds);
 
-        this.drawLine(ds);
+        //this.drawLine(ds);
     }
 }
