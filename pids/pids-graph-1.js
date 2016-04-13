@@ -285,6 +285,66 @@ var pidsGraph = {
 
     },
 
+    renderTable: function(dataSet){
+
+        // draw the table at the start of the page
+
+        // get all entity types
+
+        var entityTypes = [];
+
+        for (var i = 0; i < dataSet.entity.length; i++) {
+            if (-1 === $.inArray(dataSet.entity[i].type, entityTypes)) {
+                entityTypes.push(dataSet.entity[i].type)
+            }
+
+        }
+
+        console.log("entityTypes", entityTypes);
+
+        for (var i = 0; i < entityTypes.length; i++) {
+
+            var tableContainer = $("#table-" + dataSet.entity[i].type);
+            console.log(tableContainer);
+
+            var table = $('<table></table>').addClass("table table-bordered");
+
+            var headerAdded = false;
+
+            for (var j = 0; j < dataSet.entity.length; j++) {
+
+                if (dataSet.entity[j] == dataSet.entity[i].type) {
+
+                    console.log(j);
+                
+                    if (!headerAdded) {
+                        headerAdded = true;
+                        console.log('headerAdded ', dataSet.entity[j]);
+
+                        console.log('headerAdded ', dataSet.entity[j].properties);
+                        var headers = Object.keys(dataSet.entity[j].properties);
+                        console.log(headers);
+                        var header = $('<thead><tr></tr></thead>');
+                        for (var k = 0; k < headers.lenght; k++) {
+                            console.log(headers[k]);
+                            header.append('<th>' + headers[k] + '</th>');
+                        }
+                        table.append(header);
+                    }
+
+                }
+
+            }
+
+            // loop through all companies/products
+
+            tableContainer.append(table);
+
+        }
+
+
+    },
+
 
     renderGraphs: function(dataSet){
 
@@ -320,5 +380,11 @@ var pidsGraph = {
         //console.log(ds);
 
         //this.drawLine(ds);
+    },
+    render: function (dataSet) {
+
+        this.renderTable(dataSet);
+
+        //this.renderGraphs(dataSet);
     }
 }

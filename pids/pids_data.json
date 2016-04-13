@@ -686,91 +686,91 @@
       "type": "company",
       "name": "Weyland-Yutani",
       "properties": {
-        "Market Share %": "84%",
-        "Market Growth %": "4",
         "sales": "EUR 234.231.111",
+        "Evolution Index": "90",
         "Growth %": "-3",
-        "Evolution Index": "90"
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     },
     {
       "id": "unobtanium",
       "type": "product",
       "name": "UNOBTANIUM",
+      "patent": {
+        "end_date": "20230606",
+        "start_date": "20120505"
+      },
       "properties": {
-        "Evolution Index": "90",
-        "Market Share %": "84%",
-        "Market Growth %": "4",
-        "Growth %": "-3",
         "sales": "EUR 234.231.111",
-        "patent": {
-          "end_date": "20230606",
-          "start_date": "20120505"
-        }
+        "Evolution Index": "90",
+        "Growth %": "-3",
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     },
     {
       "id": "aalderaan",
       "type": "product",
       "name": "AALDERAN",
+      "patent": {
+        "end_date": "20230606",
+        "start_date": "20120505"
+      },
       "properties": {
-        "Evolution Index": "90",
-        "Market Share %": "84%",
-        "Market Growth %": "4",
-        "Growth %": "-3",
         "sales": "EUR 234.231.111",
-        "patent": {
-          "end_date": "20230606",
-          "start_date": "20120505"
-        }
+        "Evolution Index": "90",
+        "Growth %": "-3",
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     },
     {
       "id": "bospherus",
       "type": "product",
       "name": "BOSPHERUS",
+      "patent": {
+        "end_date": "20230606",
+        "start_date": "20120505"
+      },
       "properties": {
-        "Evolution Index": "90",
-        "Market Share %": "84%",
-        "Market Growth %": "4",
-        "Growth %": "-3",
         "sales": "EUR 234.231.111",
-        "patent": {
-          "end_date": "20230606",
-          "start_date": "20120505"
-        }
+        "Evolution Index": "90",
+        "Growth %": "-3",
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     },
     {
       "id": "ackbar",
       "type": "product",
       "name": "ACKBAR",
+      "patent": {
+        "end_date": "20230606",
+        "start_date": "20120505"
+      },
       "properties": {
-        "Evolution Index": "90",
-        "Market Share %": "84%",
-        "Market Growth %": "4",
-        "Growth %": "-3",
         "sales": "EUR 234.231.111",
-        "patent": {
-          "end_date": "20230606",
-          "start_date": "20120505"
-        }
+        "Evolution Index": "90",
+        "Growth %": "-3",
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     },
     {
       "id": "floradanica",
       "type": "product",
       "name": "FLORADANICA",
+      "patent": {
+        "end_date": "20230606",
+        "start_date": "20120505"
+      },
       "properties": {
-        "Evolution Index": "90",
-        "Market Share %": "84%",
-        "Market Growth %": "4",
-        "Growth %": "-3",
         "sales": "EUR 234.231.111",
-        "patent": {
-          "end_date": "20230606",
-          "start_date": "20120505"
-        }
+        "Evolution Index": "90",
+        "Growth %": "-3",
+        "Market Growth %": "4",
+        "Market Share %": "84%"
       }
     }
   ]
