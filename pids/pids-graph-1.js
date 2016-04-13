@@ -15,6 +15,7 @@ var pidsGraph = {
     yMin: [],
     xMax: [],
     yMax: [],
+    axis: [],
     setDataSet: function (dataSet) {
 
         // sets the dataset into the object
@@ -90,6 +91,90 @@ var pidsGraph = {
         return this.scales[ds.chartid];
     },
 
+    getAxisGenerators: function(scale){
+
+        return {
+            y: d3.svg.axis().scale(scale.y).orient("left").ticks(5),
+            x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"))
+        };
+
+               
+
+        //var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
+        //var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
+
+    },
+
+    getAxis: function(ds, svg, axisGenerators){
+
+        if (this.axis[ds.chartid] === undefined) {
+
+            this.axis[ds.chartid] = {};
+            this.axis[ds.chartid].y = svg.append("g").call(axisGenerators.y)
+            .attr("class", "y-axis")
+            .attr("transform", "translate(" + this.padding + ",0)");
+
+            this.axis[ds.chartid].x = svg.append("g").call(axisGenerators.x)
+                .attr("class", "x-axis")
+                .attr("transform", "translate(0," + (this.height - this.padding) + ")");
+
+
+        }
+
+    },
+
+    addDots: function (ds, svg, scale) {
+
+        var self = this;
+
+        // add tooltip
+        var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip")
+        .style("opacity", 0);
+
+        var dots = svg.selectAll("circle.circle-" + ds.entityid)
+            .data(ds.data)
+            .enter()
+            .append("circle")
+            .attr({
+                cx: function (d) { return scale.x(self.getDate(d.x)); },
+                cy: function (d) { return scale.y(d.y); },
+                r: 4,
+                "fill": "#00ff88",
+                class: "circle-"+ds.entityid
+            })
+            .on("mouseover", function (d) {
+                tooltip.transition()
+                .duration(500)
+                .style("opacity", .85)
+                tooltip.html("<strong>sales " + d.y + "</strong>")
+                .style("left", (d3.event.pageX) + "px")
+                .style("top", (d3.event.pageY - 20) + "px");
+            })
+            .on("mouseout", function (d) {
+                tooltip.transition()
+                .duration(500)
+                .style("opacity", 0);
+            });
+
+        return dots;
+    },
+
+    addLabels: function(ds, svg, scale){
+        var self = this;
+        var labels = svg.selectAll("text.label-" + ds.entityid)
+            .data(ds.data)
+            .enter()
+            .append("text")
+            .text( function(d){return d.y; } )
+            .attr({
+                x: function (d) { return scale.x(self.getDate(d.x)); },
+                y: function (d) { return scale.y(d.y); }
+            });
+
+        return labels;
+    },
+
     /*
 
     Draw one line from a dataset
@@ -97,11 +182,9 @@ var pidsGraph = {
     */
     drawLine: function (ds) {
 
-        var self = this;
 
         var svg = this.getSvg(ds);
-
-
+        var self = this;
 
         //var lineFun = d3.svg.line()
         //.x(function (d) { return d.month * 2; })
@@ -118,79 +201,38 @@ var pidsGraph = {
         //console.log("MIN month", this.getDate(d3.min(ds.data, function (d) { return d.x; })));
         //console.log("MAX month", this.getDate(d3.max(ds.data, function (d) { return d.x; })));
 
-        // add tooltip
-        var tooltip = d3.select("body").append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0);
 
+
+        // get the scales
         var scale = this.getScales(ds);
 
+        // get the axis generators
+        var axisGenerators = this.getAxisGenerators(scale);
 
-
-       // var xScale = d3.time.scale()
-      //      .domain([
-      //          self.xMin[ds.chartid],
-       //         self.xMax[ds.chartid]
-       //     ])
-       //     .range([this.padding, this.width - this.padding])
-      //      .nice();
-
-       // var yScale = d3.scale.linear()
-       //     .domain([
-       //         self.yMin[ds.chartid],
-       //         self.yMax[ds.chartid]
-       //     ])
-       //     .range([this.height - this.padding, this.padding])
-       //     .nice();
-
-        var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
-        var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
+        //var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
+        //var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
 
         var lineFun = d3.svg.line()
           .x(function (d) { return scale.x(self.getDate(d.x)); })
           .y(function (d) { return scale.y(d.y); })
           .interpolate("linear");
 
-        var yAxis = svg.append("g").call(yAxisGen)
-            .attr("class", "y-axis")
-            .attr("transform", "translate(" + this.padding + ",0)");
-
-        var xAxis = svg.append("g").call(xAxisGen)
-            .attr("class", "x-axis")
-            .attr("transform", "translate(0," + (this.height - this.padding) + ")");
+        var axis = this.getAxis(ds, svg, axisGenerators);
 
         var viz = svg.append("path")
-        .attr({
-            d: lineFun(ds.data),
-            "stroke": "purple",
-            "stroke-width": 2,
-            "fill": "none"
-        });
+            .attr({
+                d: lineFun(ds.data),
+                "stroke": "purple",
+                "stroke-width": 2,
+                "fill": "none"
+            });
 
-        var dots = svg.selectAll("circle")
-        .data(ds.data)
-        .enter()
-        .append("circle")
-        .attr({
-            cx: function (d) { return scale.x(self.getDate(d.x)); },
-            cy: function (d) { return scale.y(d.y); },
-            r: 4,
-            "fill": "#00ff88",
-            class: "circle-"+ds.entityid
-        })
-        .on("mouseover", function (d) {
-            tooltip.transition()
-            .duration(500)
-            .style("opacity", .85)
-            tooltip.html("<strong>sales " + d.y + "</strong>")
-            .style("left", (d3.event.pageX) + "px")
-            .style("top", (d3.event.pageY - 20) + "px");
-        })
-        .on("mouseout", function (d) {
-            tooltip.transition()
-            .duration(500)
-            .style("opacity", 0);
-        });
+        // add dots
+        var dots = this.addDots(ds, svg, scale);
+
+        // add labels
+        var labels = this.addLabels(ds, svg, scale);
+
     },
 
     calculateScales: function (dataSet) {
