@@ -224,7 +224,8 @@ var pidsGraph = {
                 d: lineFun(ds.data),
                 "stroke": "purple",
                 "stroke-width": 2,
-                "fill": "none"
+                "fill": "none",
+                "class": ds.entityid
             });
 
         // add dots
