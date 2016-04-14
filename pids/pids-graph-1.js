@@ -309,31 +309,56 @@ var pidsGraph = {
 
             var table = $('<table></table>').addClass("table table-bordered");
 
+            var tableBody = $('<tbody></tbody>');
+
             var headerAdded = false;
 
             for (var j = 0; j < dataSet.entity.length; j++) {
 
-                if (dataSet.entity[j] == dataSet.entity[i].type) {
+                //console.log('now only looking for type=' + dataSet.entity[i].type + " - now trying " + dataSet.entity[j].type);
 
-                    console.log(j);
+                if (dataSet.entity[j].type == dataSet.entity[i].type) {
+
+                    //console.log(j);
                 
                     if (!headerAdded) {
                         headerAdded = true;
-                        console.log('headerAdded ', dataSet.entity[j]);
+                        //console.log('headerAdded ', dataSet.entity[j]);
+                        //console.log('headerAdded ', dataSet.entity[j].properties);
+                        var headerKeys = Object.keys(dataSet.entity[j].properties);
+                        //console.log("headerKeys", headerKeys);
+                        //console.log("headerKeys.length", headerKeys.length);
 
-                        console.log('headerAdded ', dataSet.entity[j].properties);
-                        var headers = Object.keys(dataSet.entity[j].properties);
-                        console.log(headers);
-                        var header = $('<thead><tr></tr></thead>');
-                        for (var k = 0; k < headers.lenght; k++) {
-                            console.log(headers[k]);
-                            header.append('<th>' + headers[k] + '</th>');
+                        var header = $('<thead></thead>');
+                        var headerRow = $('<tr></tr>');
+
+                        // first add the entity type to the table
+                        headerRow.append('<th>' + dataSet.entity[j].type + '</th>');
+
+                        for (var k = 0; k < headerKeys.length; k++) {
+                            console.log("inserting " + headerKeys[k]);
+                            headerRow.append('<th>' + headerKeys[k] + '</th>');
                         }
+                        header.append(headerRow);
                         table.append(header);
                     }
 
-                }
+                    // now add the row of data
 
+                    var dataRow = $('<tr></tr>');
+
+                    var keys = Object.keys(dataSet.entity[j].properties);
+
+                    // first add the entity name to the table
+                    dataRow.append('<td>' + dataSet.entity[j].name + '</td>');
+                    for (var k = 0; k < keys.length; k++) {
+                        console.log("inserting " + dataSet.entity[j].properties[keys[k]]);
+                        dataRow.append('<td>' + dataSet.entity[j].properties[keys[k]] + '</td>');
+                    }
+
+                    tableBody.append(dataRow);
+                    table.append(tableBody);
+                }
             }
 
             // loop through all companies/products

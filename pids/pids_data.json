@@ -702,11 +702,11 @@
         "start_date": "20120505"
       },
       "properties": {
-        "sales": "EUR 234.231.111",
-        "Evolution Index": "90",
-        "Growth %": "-3",
-        "Market Growth %": "4",
-        "Market Share %": "84%"
+        "sales": "EUR 113.345.655",
+        "Evolution Index": "32",
+        "Growth %": "45%",
+        "Market Growth %": "81%",
+        "Market Share %": "17%"
       }
     },
     {
@@ -718,11 +718,11 @@
         "start_date": "20120505"
       },
       "properties": {
-        "sales": "EUR 234.231.111",
-        "Evolution Index": "90",
-        "Growth %": "-3",
-        "Market Growth %": "4",
-        "Market Share %": "84%"
+        "sales": "EUR 66.111",
+        "Evolution Index": "-22",
+        "Growth %": "-23%",
+        "Market Growth %": "44%",
+        "Market Share %": "22%"
       }
     },
     {
@@ -735,10 +735,10 @@
       },
       "properties": {
         "sales": "EUR 234.231.111",
-        "Evolution Index": "90",
-        "Growth %": "-3",
-        "Market Growth %": "4",
-        "Market Share %": "84%"
+        "Evolution Index": "44",
+        "Growth %": "-32%",
+        "Market Growth %": "14%",
+        "Market Share %": "16%"
       }
     },
     {
@@ -750,10 +750,10 @@
         "start_date": "20120505"
       },
       "properties": {
-        "sales": "EUR 234.231.111",
+        "sales": "EUR 886.455.435",
         "Evolution Index": "90",
-        "Growth %": "-3",
-        "Market Growth %": "4",
+        "Growth %": "-53%",
+        "Market Growth %": "65%",
         "Market Share %": "84%"
       }
     },
@@ -766,11 +766,11 @@
         "start_date": "20120505"
       },
       "properties": {
-        "sales": "EUR 234.231.111",
-        "Evolution Index": "90",
-        "Growth %": "-3",
-        "Market Growth %": "4",
-        "Market Share %": "84%"
+        "sales": "EUR 55.232.121",
+        "Evolution Index": "35",
+        "Growth %": "-23%",
+        "Market Growth %": "33%",
+        "Market Share %": "14%"
       }
     }
   ]
