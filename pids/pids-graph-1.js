@@ -16,6 +16,22 @@ var pidsGraph = {
     xMax: [],
     yMax: [],
     axis: [],
+    getColorClassName: function(number){
+        // gets a code for a specific color
+
+        return "color-"+number % 9;
+    },
+    getColorClassNameFromEntityId: function (id) {
+        // gets a code for a specific color
+
+        // loop through enities until id match established
+
+        for (var i = 0; i < this.dataSet.entity.length; i++) {
+            if (this.dataSet.entity[i].id == id) {
+                return this.getColorClassName(i);
+            }
+        }
+    },
     setDataSet: function (dataSet) {
 
         // sets the dataset into the object
@@ -140,8 +156,9 @@ var pidsGraph = {
                 cx: function (d) { return scale.x(self.getDate(d.x)); },
                 cy: function (d) { return scale.y(d.y); },
                 r: 4,
-                "fill": "#00ff88",
-                class: "circle-"+ds.entityid
+                "stroke-width": 2,
+                "fill":"none",
+                class: "circle-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid)
             })
             .on("mouseover", function (d) {
                 tooltip.transition()
@@ -222,10 +239,9 @@ var pidsGraph = {
         var viz = svg.append("path")
             .attr({
                 d: lineFun(ds.data),
-                "stroke": "purple",
                 "stroke-width": 2,
-                "fill": "none",
-                "class": ds.entityid
+                "class": ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid),
+                "fill": "none"
             });
 
         // add dots
@@ -345,7 +361,7 @@ var pidsGraph = {
 
                     // now add the row of data
 
-                    var dataRow = $('<tr></tr>');
+                    var dataRow = $('<tr class='+ this.getColorClassName(j)+'></tr>');
 
                     var keys = Object.keys(dataSet.entity[j].properties);
 
@@ -377,8 +393,7 @@ var pidsGraph = {
 
         console.log(dataSet);
 
-        // first set the dataSet
-        this.dataSet = dataSet;
+
 
         //console.log("Now drawing dataset:", this.dataSet.datasets);
         //console.log("Now drawing dataset:", this.dataSet.datasets.length);
@@ -407,6 +422,9 @@ var pidsGraph = {
         //this.drawLine(ds);
     },
     render: function (dataSet) {
+
+        // first set the dataSet
+        this.dataSet = dataSet;
 
         this.renderTable(dataSet);
 

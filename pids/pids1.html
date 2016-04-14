@@ -21,17 +21,17 @@
 
     <script>
 
-    $.ajax({
-        dataType: "json",
-        url: "pids_data.json",
-        success: function(data, textStatus, jqXHR){
+        $.ajax({
+            dataType: "json",
+            url: "pids_data.json",
+            success: function (data, textStatus, jqXHR) {
 
-            //pidsGraph.setDataSet(data);
-            //pidsGraph.drawLine();
+                //pidsGraph.setDataSet(data);
+                //pidsGraph.drawLine();
 
-            pidsGraph.render(data);
-        }
-    });
+                pidsGraph.render(data);
+            }
+        });
 
     </script>
 
@@ -44,9 +44,9 @@
             stroke: black;
             shape-rendering: crispEdges;
         }
+
         .y-axis text,
         .x-axis text {
-            
         }
 
         div.tooltip {
@@ -60,7 +60,61 @@
             pointer-events: none;
             font-size: 10px;
         }
-    </style>   
+
+        /* colors */
+
+        .color-0 {
+            stroke: #ff0000;
+            color: #ff0000;
+        }
+
+        .color-1 {
+            stroke: #ff8000;
+            color: #ff8000;
+        }
+
+        .color-2 {
+            stroke: #ffff00;
+            color: #ffff00;
+        }
+
+        .color-3 {
+            stroke: #80ff00;
+            color: #80ff00;
+        }
+
+        .color-4 {
+            stroke: #00ff00;
+            color: #00ff00;
+        }
+
+
+        .color-5 {
+            stroke: #00ff80;
+            color: #00ff80;
+        }
+
+        .color-6 {
+            stroke: #00ffff;
+            color: #00ffff;
+        }
+
+        .color-7 {
+            stroke: #0080ff;
+            color: #0080ff;
+        }
+
+        .color-8 {
+            stroke: #0000ff;
+            color: #0000ff;
+        }
+
+        .color-9 {
+            stroke: #7f00ff;
+            color: #7f00ff;
+        }
+
+    </style>
 </head>
 <body>
 

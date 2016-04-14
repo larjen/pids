@@ -4,7 +4,7 @@ This is the pilot for the datastore.
 
 ## todo
 
-* Create a color legend for the charts and products
+* Create a color legend for the charts and products, and give all lines, dots charts and fields a unique identifier
 * Make the svg fill horizontal space completely
 * Wire up functionality to highlight specific product or company when product or company selected
 	* Mockup the pub sub framework for this thing to work
