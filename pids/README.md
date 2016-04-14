@@ -6,7 +6,6 @@ This is the pilot for the datastore.
 
 * Create a color legend for the charts and products
 * Make the svg fill horizontal space completely
-* Autofill tables at top
 * Wire up functionality to highlight specific product or company when product or company selected
 	* Mockup the pub sub framework for this thing to work
 * Take into account redrawing when resizing window.
@@ -15,6 +14,7 @@ This is the pilot for the datastore.
 
 ## done
 
+* Autofill tables at top
 * add labels to the charts
 * Make all dots work
 * Only create one axis per chart

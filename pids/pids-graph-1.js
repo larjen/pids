@@ -410,6 +410,6 @@ var pidsGraph = {
 
         this.renderTable(dataSet);
 
-        //this.renderGraphs(dataSet);
+        this.renderGraphs(dataSet);
     }
 }
