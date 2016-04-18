@@ -155,6 +155,8 @@ var pidsGraph = {
             .attr({
                 cx: function (d) { return scale.x(self.getDate(d.x)); },
                 cy: function (d) { return scale.y(d.y); },
+                "data-name": ds.entityid,
+                "data-action": "dim",
                 r: 3,
                 "stroke-width": 4,
                 "fill":"none",
@@ -187,6 +189,8 @@ var pidsGraph = {
             .attr({
                 x: function (d) { return scale.x(self.getDate(d.x)); },
                 y: function (d) { return scale.y(d.y); },
+                "data-name": ds.entityid,
+                "data-action": "dim",
                 class: "label-" + ds.entityid + " dim dim-" + ds.entityid
             });
 
@@ -240,6 +244,8 @@ var pidsGraph = {
         var viz = svg.append("path")
             .attr({
                 d: lineFun(ds.data),
+                "data-name": ds.entityid,
+                "data-action":"dim",
                 "stroke-width": 2,
                 "class": "dim dim-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid),
                 "fill": "none"
@@ -367,10 +373,10 @@ var pidsGraph = {
                     var keys = Object.keys(dataSet.entity[j].properties);
 
                     // first add the entity name to the table
-                    dataRow.append('<td>' + dataSet.entity[j].name + '</td>');
+                    dataRow.append('<td data-name="' + dataSet.entity[j].entityid + '" data-action="dim">' + dataSet.entity[j].name + '</td>');
                     for (var k = 0; k < keys.length; k++) {
                         console.log("inserting " + dataSet.entity[j].properties[keys[k]]);
-                        dataRow.append('<td>' + dataSet.entity[j].properties[keys[k]] + '</td>');
+                        dataRow.append('<td data-name="' + dataSet.entity[j].entityid + '" data-action="dim">' + dataSet.entity[j].properties[keys[k]] + '</td>');
                     }
 
                     tableBody.append(dataRow);
@@ -442,12 +448,45 @@ var pidsGraph = {
 
         //this.drawLine(ds);
     },
+    setPubsub: function () {
+
+        // set up the listener listening for events bubbling up the DOM tree
+        jQuery(document).on("click", function (e) {
+
+            var actionType = $(e.originalEvent.target).attr("data-action");
+            var actionElement = e.originalEvent.target;
+
+            console.log("Action type:", actionType);
+            console.log("Action element:", actionElement);
+
+            if (actionType !== undefined) {
+                jQuery(document).trigger(actionType, { "action": e, "element": actionElement });
+            }
+        });
+
+        // set up the actions that should be taken
+        jQuery(document).on("dim", function (e, data) {
+            console.log("dim called", e, data);
+            var name = $(data.element).attr("data-name");
+            if (name === undefined) {
+                name = $('[name="greeting"]', data.element).val();
+            }
+
+            // hacking together fast
+
+            $("body").removeClass();
+            $("body").addClass("dim");
+            $("body").addClass("dim-" + name);
+        });
+    },
     render: function (dataSet) {
 
         // first set the dataSet
         this.dataSet = dataSet;
 
         this.setStylesheet(dataSet);
+
+        this.setPubsub();
 
         this.renderTable(dataSet);
 
