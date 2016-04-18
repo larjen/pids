@@ -4,6 +4,7 @@ This is the pilot for the datastore.
 
 ## todo
 
+* combine svg charts
 * Make the svg fill horizontal space completely
 * Take into account redrawing when resizing window.
 * Test with different data.

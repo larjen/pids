@@ -657,27 +657,39 @@
   "chart": [
     {
       "chartid": "mat-company",
+      "svgid": "mat",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Company"
     },
     {
       "chartid": "mat-product",
+      "svgid": "mat",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Product"
     },
     {
       "chartid": "marketshare-company",
+      "svgid": "marketshare",
       "x-label": "Month",
       "y-label": "Marketshare %",
       "description": "Marketshare - company"
     },
     {
       "chartid": "marketshare-product",
+      "svgid": "marketshare",
       "x-label": "Month",
       "y-label": "Marketshare %",
       "description": "Marketshare %"
+    }
+  ],
+  "svg": [
+    {
+      "svgid": "marketshare-svg"
+    },
+    {
+      "svgid": "mat-svg"
     }
   ],
   "entity": [

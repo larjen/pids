@@ -16,9 +16,10 @@ var pidsGraph = {
     xMax: [],
     yMax: [],
     axis: [],
+    entityTypes: [], // holds entity types
+    chart: [], // a collection of charts
     getColorClassName: function(number){
         // gets a code for a specific color
-
         return "color-"+number % 9;
     },
     getColorClassNameFromEntityId: function (id) {
@@ -33,19 +34,9 @@ var pidsGraph = {
         }
     },
     setDataSet: function (dataSet) {
-
         // sets the dataset into the object
-
         this.dataSet = dataSet;
-        console.log("DATA RECIEVED");
-        console.log(dataSet);
     },
-    renderMarketShareCompany: function () {
-
-    },
-
-
-
     getDate: function(s){
         var strDate = new String(s);
         var year = strDate.substr(0, 4);
@@ -53,35 +44,29 @@ var pidsGraph = {
         var day = strDate.substr(6, 2);
         return new Date(year, month, day);
     },
-
     getSvg: function (ds) {
 
-        console.log("getSvg", ds);
 
 
-        // create or get the reference to the svg object for the type of dataset
-        var chartid = ds.chartid;
-        console.log("chartid", chartid);
+        // get the svgid correlating to the chartid
+        var svgid = this.chart[ds.chartid].svgid;
 
-        var svg = d3.select("svg#svg-" + chartid);
+        console.log("svgid", svgid);
 
-        console.log('svg', svg[0][0]);
+        var svg = d3.select("svg#svg-" + svgid);
 
         if (svg[0][0] === null) {
 
             // create the svg to hold the graph and return the svg
-
-            svg = d3.select("#" + chartid).append("svg").attr({
+            svg = d3.select("#svg-container-" + svgid).append("svg").attr({
                 width: this.width,
                 height: this.height,
-                id: "svg-"+chartid
+                id: "svg-" + svgid
             });
         }
         return svg;
     },
     getScales: function(ds){
-
-        // get scal
         if (this.scales[ds.chartid] === undefined) {
 
             var xScale = d3.time.scale()
@@ -101,44 +86,26 @@ var pidsGraph = {
                 .nice();
 
             this.scales[ds.chartid] = { x: xScale, y: yScale };
-
         }
-        
         return this.scales[ds.chartid];
     },
-
     getAxisGenerators: function(scale){
-
         return {
             y: d3.svg.axis().scale(scale.y).orient("left").ticks(5),
             x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"))
         };
-
-               
-
-        //var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
-        //var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
-
     },
-
     getAxis: function(ds, svg, axisGenerators){
-
         if (this.axis[ds.chartid] === undefined) {
-
             this.axis[ds.chartid] = {};
             this.axis[ds.chartid].y = svg.append("g").call(axisGenerators.y)
-            .attr("class", "y-axis")
-            .attr("transform", "translate(" + this.padding + ",0)");
-
+                .attr("class", "y-axis")
+                .attr("transform", "translate(" + this.padding + ",0)");
             this.axis[ds.chartid].x = svg.append("g").call(axisGenerators.x)
                 .attr("class", "x-axis")
                 .attr("transform", "translate(0," + (this.height - this.padding) + ")");
-
-
         }
-
     },
-
     addDots: function (ds, svg, scale) {
 
         var self = this;
@@ -178,7 +145,6 @@ var pidsGraph = {
 
         return dots;
     },
-
     addLabels: function(ds, svg, scale){
         var self = this;
         var labels = svg.selectAll("text.label-" + ds.entityid)
@@ -196,44 +162,18 @@ var pidsGraph = {
 
         return labels;
     },
-
-    /*
-
-    Draw one line from a dataset
-
-    */
     drawLine: function (ds) {
 
-
-        var svg = this.getSvg(ds);
         var self = this;
-
-        //var lineFun = d3.svg.line()
-        //.x(function (d) { return d.month * 2; })
-        //.y(function (d) { return d.sales; })
-        //.interpolate("linear");
-        //var ds = this.dataSet.company[0].market_share;
-
-        //var rangeY = this.getLowHighNumber(ds);
-
-        //console.log("rangeY", rangeY);
-
-        //console.log("MIN sales", d3.min(ds.data, function (d) { return d.y; }));
-        //console.log("MAX sales", d3.max(ds.data, function (d) { return d.y; }));
-        //console.log("MIN month", this.getDate(d3.min(ds.data, function (d) { return d.x; })));
-        //console.log("MAX month", this.getDate(d3.max(ds.data, function (d) { return d.x; })));
-
-
-
+        var svg = this.getSvg(ds);
+        
         // get the scales
         var scale = this.getScales(ds);
 
         // get the axis generators
         var axisGenerators = this.getAxisGenerators(scale);
 
-        //var yAxisGen = d3.svg.axis().scale(scale.y).orient("left").ticks(5);
-        //var xAxisGen = d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"));
-
+        // function that draws line
         var lineFun = d3.svg.line()
           .x(function (d) { return scale.x(self.getDate(d.x)); })
           .y(function (d) { return scale.y(d.y); })
@@ -258,96 +198,67 @@ var pidsGraph = {
         var labels = this.addLabels(ds, svg, scale);
 
     },
-
     calculateScales: function (dataSet) {
 
         var chartData = [];
 
         for (var i = 0; i < this.dataSet.datasets.length; i++) {
-            console.log(this.dataSet.datasets[i].chartid);
+            //console.log(this.dataSet.datasets[i].chartid);
 
             // concat all ydata for same char
 
             if (chartData[this.dataSet.datasets[i].chartid] === undefined) {
                 chartData[this.dataSet.datasets[i].chartid] = this.dataSet.datasets[i].data;
-                console.log("array must be created", this.dataSet.datasets[i].chartid);
+                //console.log("array must be created", this.dataSet.datasets[i].chartid);
             } else {
-                console.log("array mereged", this.dataSet.datasets[i].chartid);
+                //console.log("array merged", this.dataSet.datasets[i].chartid);
                 chartData[this.dataSet.datasets[i].chartid] = chartData[this.dataSet.datasets[i].chartid].concat(this.dataSet.datasets[i].data);
             }
         }
 
         var chartIds = Object.keys(chartData);
-        console.log("chartIds",chartIds);
+        //console.log("chartIds",chartIds);
         // iterate over the charts and create the yScale
 
         for (var i = 0; chartData[chartIds[i]] !== undefined; i++) {
-            console.log("chartData[i]", chartData[chartIds[i]]);
-            console.log("MIN y " + chartIds[i], d3.min(chartData[chartIds[i]], function (d) { return d.y; }));
+            //console.log("chartData[i]", chartData[chartIds[i]]);
+            //console.log("MIN y " + chartIds[i], d3.min(chartData[chartIds[i]], function (d) { return d.y; }));
 
             this.yMin[chartIds[i]] = d3.min(chartData[chartIds[i]], function (d) { return d.y; });
 
-            console.log("MAX y " + chartIds[i], d3.max(chartData[chartIds[i]], function (d) { return d.y; }));
+            //console.log("MAX y " + chartIds[i], d3.max(chartData[chartIds[i]], function (d) { return d.y; }));
 
             this.yMax[chartIds[i]] = d3.max(chartData[chartIds[i]], function (d) { return d.y; });
 
-            console.log("MIN x " + chartIds[i], this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; })));
+            //console.log("MIN x " + chartIds[i], this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; })));
 
             this.xMin[chartIds[i]] = this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; }));
 
-            console.log("MAX x "+chartIds[i], this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; })));
+            //console.log("MAX x "+chartIds[i], this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; })));
 
             this.xMax[chartIds[i]] = this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; }));
-
-
         };
-
-
-
-
-
     },
 
     renderTable: function(dataSet){
 
         // draw the table at the start of the page
+        console.log("entityTypes", this.entityTypes);
 
-        // get all entity types
-
-        var entityTypes = [];
-
-        for (var i = 0; i < dataSet.entity.length; i++) {
-            if (-1 === $.inArray(dataSet.entity[i].type, entityTypes)) {
-                entityTypes.push(dataSet.entity[i].type)
-            }
-
-        }
-
-        console.log("entityTypes", entityTypes);
-
-        for (var i = 0; i < entityTypes.length; i++) {
+        for (var i = 0; i < this.entityTypes.length; i++) {
 
             var tableContainer = $("#table-" + dataSet.entity[i].type);
-            console.log(tableContainer);
-
             var table = $('<table></table>').addClass("table table-bordered");
-
             var tableBody = $('<tbody></tbody>');
-
             var headerAdded = false;
 
             for (var j = 0; j < dataSet.entity.length; j++) {
 
-                //console.log('now only looking for type=' + dataSet.entity[i].type + " - now trying " + dataSet.entity[j].type);
-
-                if (dataSet.entity[j].type == dataSet.entity[i].type) {
-
-                    //console.log(j);
+                //console.log('now only looking for type=' + this.entityTypes[i] + " - now trying " + dataSet.entity[j].type);
+                if (dataSet.entity[j].type == this.entityTypes[i]) {
                 
                     if (!headerAdded) {
                         headerAdded = true;
-                        //console.log('headerAdded ', dataSet.entity[j]);
-                        //console.log('headerAdded ', dataSet.entity[j].properties);
                         var headerKeys = Object.keys(dataSet.entity[j].properties);
                         //console.log("headerKeys", headerKeys);
                         //console.log("headerKeys.length", headerKeys.length);
@@ -367,15 +278,13 @@ var pidsGraph = {
                     }
 
                     // now add the row of data
-
                     var dataRow = $('<tr class="dim dim-' + dataSet.entity[j].entityid + ' ' + this.getColorClassName(j) + '"></tr>');
-
                     var keys = Object.keys(dataSet.entity[j].properties);
 
                     // first add the entity name to the table
                     dataRow.append('<td data-name="' + dataSet.entity[j].entityid + '" data-action="dim">' + dataSet.entity[j].name + '</td>');
                     for (var k = 0; k < keys.length; k++) {
-                        console.log("inserting " + dataSet.entity[j].properties[keys[k]]);
+                        //console.log("inserting " + dataSet.entity[j].properties[keys[k]]);
                         dataRow.append('<td data-name="' + dataSet.entity[j].entityid + '" data-action="dim">' + dataSet.entity[j].properties[keys[k]] + '</td>');
                     }
 
@@ -383,16 +292,9 @@ var pidsGraph = {
                     table.append(tableBody);
                 }
             }
-
-            // loop through all companies/products
-
             tableContainer.append(table);
-
         }
-
-
     },
-
     setStylesheet(dataSet) {
 
         var styleEl = document.createElement('style');
@@ -404,51 +306,26 @@ var pidsGraph = {
         // Grab style sheet
         styleSheet = styleEl.sheet;
 
+        // insert rules
         styleSheet.insertRule(".dim { transition: opacity 500ms ease;}", 0);
         styleSheet.insertRule(".dim .dim {opacity: 0.3 }", 0);
 
-
         for (var i = 0; i < dataSet.entity.length; i++) {
-            console.log(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }");
+            //console.log(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }");
             styleSheet.insertRule(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }", 0);
         }
     },
-
     renderGraphs: function(dataSet){
 
-        // this function draws all graphs
-
-        console.log(dataSet);
-
-
-
-        //console.log("Now drawing dataset:", this.dataSet.datasets);
-        //console.log("Now drawing dataset:", this.dataSet.datasets.length);
-
-        // calculate all the y scales for the graphs in the datasets
-
+        // calculate the scales
         this.calculateScales(dataSet);
 
-
         // draw every graph
-
         for (var i = 0; i < this.dataSet.datasets.length; i++) {
-
-            console.log("Now drawing dataset:", this.dataSet.datasets[i]);
             this.drawLine(this.dataSet.datasets[i]);
-
-            
         }
-
-
-        // THIS IS THE HARDCODED PARTS THAT NEEDS TO BE DYNAMIC
-        
-        //var ds = dataSet.company[0].datasets[0];
-        //console.log(ds);
-
-        //this.drawLine(ds);
     },
-    setPubsub: function () {
+    setActionHandlers: function () {
 
         // set up the listener listening for events bubbling up the DOM tree
         jQuery(document).on("click", function (e) {
@@ -456,8 +333,8 @@ var pidsGraph = {
             var actionType = $(e.originalEvent.target).attr("data-action");
             var actionElement = e.originalEvent.target;
 
-            console.log("Action type:", actionType);
-            console.log("Action element:", actionElement);
+            //console.log("Action type:", actionType);
+            //console.log("Action element:", actionElement);
 
             if (actionType !== undefined) {
                 jQuery(document).trigger(actionType, { "action": e, "element": actionElement });
@@ -466,7 +343,7 @@ var pidsGraph = {
 
         // set up the actions that should be taken
         jQuery(document).on("dim", function (e, data) {
-            console.log("dim called", e, data);
+            //console.log("dim called", e, data);
             var name = $(data.element).attr("data-name");
             $("body").removeClass();
 
@@ -477,17 +354,27 @@ var pidsGraph = {
 
         });
     },
+    initializeDataSet: function (dataSet) {
+        
+        // get all entity types
+        for (var i = 0; i < dataSet.entity.length; i++) {
+            if (-1 === $.inArray(dataSet.entity[i].type, this.entityTypes)) {
+                this.entityTypes.push(dataSet.entity[i].type)
+            }
+        }
+
+        // get all charts
+        for (var i = 0; i < dataSet.chart.length; i++) {
+            this.chart[dataSet.chart[i].chartid] = dataSet.chart[i];
+        }
+
+    },
     render: function (dataSet) {
-
-        // first set the dataSet
+        this.initializeDataSet(dataSet);
         this.dataSet = dataSet;
-
         this.setStylesheet(dataSet);
-
-        this.setPubsub();
-
+        this.setActionHandlers();
         this.renderTable(dataSet);
-
         this.renderGraphs(dataSet);
     }
 }
