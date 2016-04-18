@@ -74,8 +74,8 @@
         }
 
         .color-2 {
-            stroke: #ffff00;
-            color: #ffff00;
+            stroke: #888800;
+            color: #888800;
         }
 
         .color-3 {
@@ -114,9 +114,17 @@
             color: #7f00ff;
         }
 
+        td[data-action="dim"],
+        path[data-action="dim"],
+        circle[data-action="dim"],
+        text[data-action="dim"] {
+            cursor: pointer;
+        }
+        
+
     </style>
 </head>
-<body>
+<body data-action="dim">
 
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">

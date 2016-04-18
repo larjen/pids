@@ -368,7 +368,7 @@ var pidsGraph = {
 
                     // now add the row of data
 
-                    var dataRow = $('<tr class='+ this.getColorClassName(j)+'></tr>');
+                    var dataRow = $('<tr class="dim dim-' + dataSet.entity[j].entityid + ' ' + this.getColorClassName(j) + '"></tr>');
 
                     var keys = Object.keys(dataSet.entity[j].properties);
 
@@ -468,15 +468,13 @@ var pidsGraph = {
         jQuery(document).on("dim", function (e, data) {
             console.log("dim called", e, data);
             var name = $(data.element).attr("data-name");
-            if (name === undefined) {
-                name = $('[name="greeting"]', data.element).val();
+            $("body").removeClass();
+
+            if (name !== undefined) {
+                $("body").addClass("dim");
+                $("body").addClass("dim-" + name);
             }
 
-            // hacking together fast
-
-            $("body").removeClass();
-            $("body").addClass("dim");
-            $("body").addClass("dim-" + name);
         });
     },
     render: function (dataSet) {
