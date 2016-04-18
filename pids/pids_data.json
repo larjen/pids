@@ -660,36 +660,56 @@
       "svgid": "mat",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
-      "description": "KPI development - Company"
+      "description": "KPI development - Company",
+      "yrangemax": 200,
+      "yrangemin": 0,
+      "yrangemaxpadding": 0,
+      "yrangeminpadding": 50
     },
     {
       "chartid": "mat-product",
       "svgid": "mat",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
-      "description": "KPI development - Product"
+      "description": "KPI development - Product",
+      "yrangemax": 400,
+      "yrangemin": 200,
+      "yrangemaxpadding": -50,
+      "yrangeminpadding": 0
     },
     {
       "chartid": "marketshare-company",
       "svgid": "marketshare",
       "x-label": "Month",
       "y-label": "Marketshare %",
-      "description": "Marketshare - company"
+      "description": "Marketshare - company",
+      "yrangemax": 200,
+      "yrangemin": 0,
+      "yrangemaxpadding": 0,
+      "yrangeminpadding": 50
     },
     {
       "chartid": "marketshare-product",
       "svgid": "marketshare",
       "x-label": "Month",
       "y-label": "Marketshare %",
-      "description": "Marketshare %"
+      "description": "Marketshare %",
+      "yrangemax": 400,
+      "yrangemin": 200,
+      "yrangemaxpadding": -50,
+      "yrangeminpadding": 0
     }
   ],
   "svg": [
     {
-      "svgid": "marketshare-svg"
+      "svgid": "marketshare-svg",
+      "height": "400",
+      "width": "940"
     },
     {
-      "svgid": "mat-svg"
+      "height": "400",
+      "svgid": "mat-svg",
+      "width": "940"
     }
   ],
   "entity": [

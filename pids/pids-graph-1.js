@@ -16,8 +16,10 @@ var pidsGraph = {
     xMax: [],
     yMax: [],
     axis: [],
+    entity: [], // list of all entities
     entityTypes: [], // holds entity types
     chart: [], // a collection of charts
+    svg: [], // holds svg
     getColorClassName: function(number){
         // gets a code for a specific color
         return "color-"+number % 9;
@@ -51,7 +53,7 @@ var pidsGraph = {
         // get the svgid correlating to the chartid
         var svgid = this.chart[ds.chartid].svgid;
 
-        console.log("svgid", svgid);
+        //console.log("svgid", svgid);
 
         var svg = d3.select("svg#svg-" + svgid);
 
@@ -68,7 +70,6 @@ var pidsGraph = {
     },
     getScales: function(ds){
         if (this.scales[ds.chartid] === undefined) {
-
             var xScale = d3.time.scale()
             .domain([
                 this.xMin[ds.chartid],
@@ -76,13 +77,16 @@ var pidsGraph = {
             ])
             .range([this.padding, this.width - this.padding])
             .nice();
-
+            
             var yScale = d3.scale.linear()
                 .domain([
                     this.yMin[ds.chartid],
                     this.yMax[ds.chartid]
                 ])
-                .range([this.height - this.padding, this.padding])
+                .range([
+                    this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding,
+                    this.chart[ds.chartid].yrangemin + this.chart[ds.chartid].yrangeminpadding,
+                ])
                 .nice();
 
             this.scales[ds.chartid] = { x: xScale, y: yScale };
@@ -91,7 +95,7 @@ var pidsGraph = {
     },
     getAxisGenerators: function(scale){
         return {
-            y: d3.svg.axis().scale(scale.y).orient("left").ticks(5),
+            y: d3.svg.axis().scale(scale.y).orient("left").ticks(4),
             x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"))
         };
     },
@@ -103,7 +107,7 @@ var pidsGraph = {
                 .attr("transform", "translate(" + this.padding + ",0)");
             this.axis[ds.chartid].x = svg.append("g").call(axisGenerators.x)
                 .attr("class", "x-axis")
-                .attr("transform", "translate(0," + (this.height - this.padding) + ")");
+                .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
         }
     },
     addDots: function (ds, svg, scale) {
@@ -243,7 +247,7 @@ var pidsGraph = {
     renderTable: function(dataSet){
 
         // draw the table at the start of the page
-        console.log("entityTypes", this.entityTypes);
+        //console.log("entityTypes", this.entityTypes);
 
         for (var i = 0; i < this.entityTypes.length; i++) {
 
@@ -309,6 +313,7 @@ var pidsGraph = {
         // insert rules
         styleSheet.insertRule(".dim { transition: opacity 500ms ease;}", 0);
         styleSheet.insertRule(".dim .dim {opacity: 0.3 }", 0);
+        styleSheet.insertRule(".dim text.dim {opacity: 0 }", 0);
 
         for (var i = 0; i < dataSet.entity.length; i++) {
             //console.log(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }");
@@ -366,6 +371,16 @@ var pidsGraph = {
         // get all charts
         for (var i = 0; i < dataSet.chart.length; i++) {
             this.chart[dataSet.chart[i].chartid] = dataSet.chart[i];
+        }
+
+        // get all entities
+        for (var i = 0; i < dataSet.entity.length; i++) {
+            this.entity[dataSet.entity[i].entityid] = dataSet.entity[i];
+        }
+
+        // get all svg
+        for (var i = 0; i < dataSet.svg.length; i++) {
+            this.svg[dataSet.svg[i].svgid] = dataSet.svg[i];
         }
 
     },
