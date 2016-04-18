@@ -656,25 +656,25 @@
   ],
   "chart": [
     {
-      "id": "mat-company",
+      "chartid": "mat-company",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Company"
     },
     {
-      "id": "mat-product",
+      "chartid": "mat-product",
       "x-label": "Month",
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Product"
     },
     {
-      "id": "marketshare-company",
+      "chartid": "marketshare-company",
       "x-label": "Month",
       "y-label": "Marketshare %",
       "description": "Marketshare - company"
     },
     {
-      "id": "marketshare-product",
+      "chartid": "marketshare-product",
       "x-label": "Month",
       "y-label": "Marketshare %",
       "description": "Marketshare %"
@@ -682,7 +682,7 @@
   ],
   "entity": [
     {
-      "id": "weyland_yutani",
+      "entityid": "weyland_yutani",
       "type": "company",
       "name": "Weyland-Yutani",
       "properties": {
@@ -694,7 +694,7 @@
       }
     },
     {
-      "id": "unobtanium",
+      "entityid": "unobtanium",
       "type": "product",
       "name": "UNOBTANIUM",
       "patent": {
@@ -710,7 +710,7 @@
       }
     },
     {
-      "id": "aalderaan",
+      "entityid": "aalderaan",
       "type": "product",
       "name": "AALDERAN",
       "patent": {
@@ -726,7 +726,7 @@
       }
     },
     {
-      "id": "bospherus",
+      "entityid": "bospherus",
       "type": "product",
       "name": "BOSPHERUS",
       "patent": {
@@ -742,7 +742,7 @@
       }
     },
     {
-      "id": "ackbar",
+      "entityid": "ackbar",
       "type": "product",
       "name": "ACKBAR",
       "patent": {
@@ -758,7 +758,7 @@
       }
     },
     {
-      "id": "floradanica",
+      "entityid": "floradanica",
       "type": "product",
       "name": "FLORADANICA",
       "patent": {

@@ -27,7 +27,7 @@ var pidsGraph = {
         // loop through enities until id match established
 
         for (var i = 0; i < this.dataSet.entity.length; i++) {
-            if (this.dataSet.entity[i].id == id) {
+            if (this.dataSet.entity[i].entityid == id) {
                 return this.getColorClassName(i);
             }
         }
@@ -155,10 +155,10 @@ var pidsGraph = {
             .attr({
                 cx: function (d) { return scale.x(self.getDate(d.x)); },
                 cy: function (d) { return scale.y(d.y); },
-                r: 4,
-                "stroke-width": 2,
+                r: 3,
+                "stroke-width": 4,
                 "fill":"none",
-                class: "circle-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid)
+                class: "circle-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid) + " dim dim-" + ds.entityid
             })
             .on("mouseover", function (d) {
                 tooltip.transition()
@@ -186,7 +186,8 @@ var pidsGraph = {
             .text( function(d){return d.y; } )
             .attr({
                 x: function (d) { return scale.x(self.getDate(d.x)); },
-                y: function (d) { return scale.y(d.y); }
+                y: function (d) { return scale.y(d.y); },
+                class: "label-" + ds.entityid + " dim dim-" + ds.entityid
             });
 
         return labels;
@@ -240,7 +241,7 @@ var pidsGraph = {
             .attr({
                 d: lineFun(ds.data),
                 "stroke-width": 2,
-                "class": ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid),
+                "class": "dim dim-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid),
                 "fill": "none"
             });
 
@@ -386,6 +387,26 @@ var pidsGraph = {
 
     },
 
+    setStylesheet(dataSet) {
+
+        var styleEl = document.createElement('style');
+        var styleSheet;
+
+        // Append style element to head
+        document.head.appendChild(styleEl);
+
+        // Grab style sheet
+        styleSheet = styleEl.sheet;
+
+        styleSheet.insertRule(".dim { transition: opacity 500ms ease;}", 0);
+        styleSheet.insertRule(".dim .dim {opacity: 0.3 }", 0);
+
+
+        for (var i = 0; i < dataSet.entity.length; i++) {
+            console.log(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }");
+            styleSheet.insertRule(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }", 0);
+        }
+    },
 
     renderGraphs: function(dataSet){
 
@@ -425,6 +446,8 @@ var pidsGraph = {
 
         // first set the dataSet
         this.dataSet = dataSet;
+
+        this.setStylesheet(dataSet);
 
         this.renderTable(dataSet);
 
