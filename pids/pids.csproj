@@ -96,7 +96,7 @@
   <ItemGroup>
     <Content Include="css\nvd3.css" />
     <Content Include="trash\d3-natural.html" />
-    <Content Include="index.html" />
+    <Content Include="trash\index-demograph.html" />
     <Content Include="trash\graph.js" />
     <Content Include="images\android-desktop.png" />
     <Content Include="images\android-logo-white.png" />
@@ -125,7 +125,7 @@
     </Content>
     <Content Include="package.json" />
     <Content Include="pids-graph-1.js" />
-    <Content Include="pids1.html" />
+    <Content Include="index.html" />
     <Content Include="scripts\d3\d3.js" />
     <Content Include="scripts\d3\d3.min.js" />
     <Content Include="scripts\d3\LICENSE" />

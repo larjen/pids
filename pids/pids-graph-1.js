@@ -95,20 +95,25 @@ var pidsGraph = {
     },
     getAxisGenerators: function(scale){
         return {
-            y: d3.svg.axis().scale(scale.y).orient("left").ticks(4),
-            x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b"))
+            y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-100).outerTickSize(0),
+            x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b")).innerTickSize(-100).outerTickSize(0)
         };
     },
     getAxis: function(ds, svg, axisGenerators){
         if (this.axis[ds.chartid] === undefined) {
             this.axis[ds.chartid] = {};
-            this.axis[ds.chartid].y = svg.append("g").call(axisGenerators.y)
+            this.axis[ds.chartid].y = svg.append("g")
+                .call(axisGenerators.y)
                 .attr("class", "y-axis")
                 .attr("transform", "translate(" + this.padding + ",0)");
-            this.axis[ds.chartid].x = svg.append("g").call(axisGenerators.x)
+            this.axis[ds.chartid].x = svg.append("g")
+                .call(axisGenerators.x)
                 .attr("class", "x-axis")
                 .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
         }
+
+        
+
     },
     addDots: function (ds, svg, scale) {
 
@@ -190,7 +195,7 @@ var pidsGraph = {
                 d: lineFun(ds.data),
                 "data-name": ds.entityid,
                 "data-action":"dim",
-                "stroke-width": 2,
+                "stroke-width": 3,
                 "class": "dim dim-" + ds.entityid + " " + this.getColorClassNameFromEntityId(ds.entityid),
                 "fill": "none"
             });
@@ -314,6 +319,8 @@ var pidsGraph = {
         styleSheet.insertRule(".dim { transition: opacity 500ms ease;}", 0);
         styleSheet.insertRule(".dim .dim {opacity: 0.3 }", 0);
         styleSheet.insertRule(".dim text.dim {opacity: 0 }", 0);
+        styleSheet.insertRule(".dim circle.dim {opacity: 0 }", 0);
+
 
         for (var i = 0; i < dataSet.entity.length; i++) {
             //console.log(".dim.dim-" + dataSet.entity[i].entityid + " .dim-" + dataSet.entity[i].entityid + " { opacity: 1 }");

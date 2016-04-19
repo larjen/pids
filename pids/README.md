@@ -4,9 +4,9 @@ This is the pilot for the datastore.
 
 ## todo
 
-* axis ticks overlapping
 * Make the svg fill horizontal space completely
 * Take into account redrawing when resizing window.
+* axis ticks overlapping
 * Test with different data.
 * Beutify axis labels
 
