@@ -64,54 +64,54 @@
         /* colors */
 
         .color-0 {
-            stroke: #ff0000;
-            color: #ff0000;
+            stroke: #1B8F64;
+            color: #1B8F64;
         }
 
         .color-1 {
-            stroke: #ff8000;
-            color: #ff8000;
+            stroke: #CF4A09;
+            color: #CF4A09;
         }
 
         .color-2 {
-            stroke: #888800;
-            color: #888800;
+            stroke: #5F5AA5;
+            color: #5F5AA5;
         }
 
         .color-3 {
-            stroke: #80ff00;
-            color: #80ff00;
+            stroke: #DE0177;
+            color: #DE0177;
         }
 
         .color-4 {
-            stroke: #00ff00;
-            color: #00ff00;
+            stroke: #57991A;
+            color: #57991A;
         }
 
 
         .color-5 {
-            stroke: #00ff80;
-            color: #00ff80;
+            stroke: #DF9C0A;
+            color: #DF9C0A;
         }
 
         .color-6 {
-            stroke: #00ffff;
-            color: #00ffff;
+            stroke: #956216;
+            color: #956216;
         }
 
         .color-7 {
-            stroke: #0080ff;
-            color: #0080ff;
+            stroke: #515451;
+            color: #515451;
         }
 
         .color-8 {
-            stroke: #0000ff;
-            color: #0000ff;
+            stroke: #2B57A3;
+            color: #2B57A3;
         }
 
         .color-9 {
-            stroke: #7f00ff;
-            color: #7f00ff;
+            stroke: #FC6A0B;
+            color: #FC6A0B;
         }
 
         td[data-action="dim"],
@@ -120,8 +120,20 @@
         text[data-action="dim"] {
             cursor: pointer;
         }
-        
 
+        .x-axis, 
+        .y-axis,
+        .x-axis line,
+        .y-axis line,
+        .x-axis .domain,
+        .y-axis .domain {
+            stroke: #aaa;
+        }
+        .x-axis text,
+        .y-axis text {
+            fill: #aaa;
+            stroke: none;
+        }
     </style>
 </head>
 <body data-action="dim">
@@ -178,29 +190,6 @@
             <div class="col-md-12">
                 <div class="table-responsive" id="table-company">
 
-                    <!--
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Agent company</th>
-                                <th>Sales</th>
-                                <th>Growth %</th>
-                                <th>Market Growth %</th>
-                                <th>Market Share %</th>
-                                <th>Evolution index</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>WEYLAND-YUTANI</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                    </table>
-                    -->
                 </div>
 
             </div>
@@ -209,71 +198,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="table-responsive" id="table-product">
-                    <!--
 
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Product</th>
-                                <th>Sales</th>
-                                <th>Growth %</th>
-                                <th>Market Growth %</th>
-                                <th>Market Share %</th>
-                                <th>Evolution index</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                            <tr>
-                                <td>BLALBA</td>
-                                <td>EUR 342.231.121</td>
-                                <td>21%</td>
-                                <td>33%</td>
-                                <td>44%</td>
-                                <td>80</td>
-                            </tr>
-                    </table>
-
-                    -->
                 </div>
             </div>
         </div>
@@ -282,7 +207,7 @@
             <div class="col-md-12">
                 <h3>Market share Company %</h3>
             </div>
-            <div class="col-md-12" id="svg-container-marketshare">
+            <div class="col-md-12" id="svg-container-marketshare" style="height: 400px;">
 
             </div>
         </div>
@@ -291,13 +216,9 @@
             <div class="col-md-12">
                 <h3>Market share Product %</h3>
             </div>
-            <div class="col-md-12" id="svg-container-mat">
+            <div class="col-md-12" id="svg-container-mat" style="height: 400px;">
 
             </div>
         </div>
-
-
-
-
 </body>
 </html>

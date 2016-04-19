@@ -7,8 +7,8 @@
 
 var pidsGraph = {
     dataSet: null,
-    width: 940,
-    height: 400,
+    width: [], // chart widths
+    height: [], // chart heights
     padding: 50,
     scales: [], // holds the calculated scales
     xMin: [],
@@ -46,9 +46,15 @@ var pidsGraph = {
         var day = strDate.substr(6, 2);
         return new Date(year, month, day);
     },
+    isLastSlice: function(ds){
+        if (this.chart[ds.chartid].slicenumber == this.chart[ds.chartid].slicetotal) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     getSvg: function (ds) {
-
-
 
         // get the svgid correlating to the chartid
         var svgid = this.chart[ds.chartid].svgid;
@@ -61,8 +67,8 @@ var pidsGraph = {
 
             // create the svg to hold the graph and return the svg
             svg = d3.select("#svg-container-" + svgid).append("svg").attr({
-                width: this.width,
-                height: this.height,
+                width: this.width[ds.chartid],
+                height: this.height[ds.chartid],
                 id: "svg-" + svgid
             });
         }
@@ -75,7 +81,7 @@ var pidsGraph = {
                 this.xMin[ds.chartid],
                 this.xMax[ds.chartid]
             ])
-            .range([this.padding, this.width - this.padding])
+            .range([this.padding, this.width[ds.chartid] - this.padding])
             .nice();
             
             var yScale = d3.scale.linear()
@@ -93,27 +99,31 @@ var pidsGraph = {
         }
         return this.scales[ds.chartid];
     },
-    getAxisGenerators: function(scale){
-        return {
-            y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-100).outerTickSize(0),
-            x: d3.svg.axis().scale(scale.x).orient("bottom").tickFormat(d3.time.format("%b")).innerTickSize(-100).outerTickSize(0)
-        };
+    getAxisGenerators: function (ds, scale) {
+        if (this.isLastSlice(ds)) {
+            return {
+                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.width[ds.chartid] + 2 * this.padding).outerTickSize(0),
+                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%b")).innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
+            };
+        } else {
+            return {
+                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.width[ds.chartid] + 2 * this.padding).outerTickSize(0),
+                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat("").innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
+            };
+        }
     },
     getAxis: function(ds, svg, axisGenerators){
         if (this.axis[ds.chartid] === undefined) {
             this.axis[ds.chartid] = {};
-            this.axis[ds.chartid].y = svg.append("g")
-                .call(axisGenerators.y)
-                .attr("class", "y-axis")
-                .attr("transform", "translate(" + this.padding + ",0)");
             this.axis[ds.chartid].x = svg.append("g")
                 .call(axisGenerators.x)
                 .attr("class", "x-axis")
                 .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
+            this.axis[ds.chartid].y = svg.append("g")
+                .call(axisGenerators.y)
+                .attr("class", "y-axis")
+                .attr("transform", "translate(" + this.padding + ",0)");
         }
-
-        
-
     },
     addDots: function (ds, svg, scale) {
 
@@ -180,7 +190,7 @@ var pidsGraph = {
         var scale = this.getScales(ds);
 
         // get the axis generators
-        var axisGenerators = this.getAxisGenerators(scale);
+        var axisGenerators = this.getAxisGenerators(ds, scale);
 
         // function that draws line
         var lineFun = d3.svg.line()
@@ -188,6 +198,7 @@ var pidsGraph = {
           .y(function (d) { return scale.y(d.y); })
           .interpolate("linear");
 
+        
         var axis = this.getAxis(ds, svg, axisGenerators);
 
         var viz = svg.append("path")
@@ -388,6 +399,12 @@ var pidsGraph = {
         // get all svg
         for (var i = 0; i < dataSet.svg.length; i++) {
             this.svg[dataSet.svg[i].svgid] = dataSet.svg[i];
+        }
+
+        // set height and width for all charts
+        for (var i = 0; i < dataSet.chart.length ; i++) {
+            this.height[dataSet.chart[i].chartid] = $("#svg-container-" + dataSet.chart[i].svgid).height();
+            this.width[dataSet.chart[i].chartid] = $("#svg-container-" + dataSet.chart[i].svgid).width();
         }
 
     },
