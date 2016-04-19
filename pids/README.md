@@ -4,14 +4,16 @@ This is the pilot for the datastore.
 
 ## todo
 
-* Make the svg fill horizontal space completely
+* remove any height and width from json data file
 * Take into account redrawing when resizing window.
-* axis ticks overlapping
 * Test with different data.
-* Beutify axis labels
+
 
 ## done
 
+* Beutify axis labels
+* axis ticks overlapping
+* Make the svg fill horizontal space completely
 * combine svg charts
 * Wire up functionality to highlight specific product or company when product or company selected
 	* Mockup the pub sub framework for this thing to work

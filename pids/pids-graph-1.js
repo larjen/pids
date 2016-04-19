@@ -99,7 +99,7 @@ var pidsGraph = {
         if (this.isLastSlice(ds)) {
             return {
                 y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.width[ds.chartid] + 2 * this.padding).outerTickSize(0),
-                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%b")).innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
+                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%B %y")).innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
             };
         } else {
             return {
@@ -113,12 +113,28 @@ var pidsGraph = {
             this.axis[ds.chartid] = {};
             this.axis[ds.chartid].x = svg.append("g")
                 .call(axisGenerators.x)
-                .attr("class", "x-axis")
+                .attr("class", "x-axis x-axis-"+ds.chartid)
                 .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
             this.axis[ds.chartid].y = svg.append("g")
                 .call(axisGenerators.y)
-                .attr("class", "y-axis")
+                .attr("class", "y-axis y-axis-"+ds.chartid)
                 .attr("transform", "translate(" + this.padding + ",0)");
+                
+            svg.selectAll(".x-axis-"+ds.chartid+" text").attr({
+                "dy": this.padding/2
+            });
+            
+            svg.selectAll(".y-axis-"+ds.chartid+" text").attr({
+                "dx": -this.padding/6
+            });
+            
+            var lastXTick = d3.select( svg.selectAll(".x-axis-"+ds.chartid+" text")[0].pop() );
+            lastXTick.remove();
+
+            var lastYTick = d3.select( svg.selectAll(".y-axis-"+ds.chartid+" text")[0].shift() );
+            console.log("lastYtick",lastYTick);
+            lastYTick.remove();
+
         }
     },
     addDots: function (ds, svg, scale) {
@@ -159,14 +175,6 @@ var pidsGraph = {
             });
 
         return dots;
-    },
-    getLabelCoordinateX: function(d,x){
-        console.log("cX", d, x);
-        return parseInt(x + d.modLabel.x);
-    },
-    getLabelCoordinateY: function(d,y){
-        console.log("cX", d, y);
-        return parseInt( y + d.modLabel.y );
     },
     addLabelPosition: function (ds) {
 
@@ -230,8 +238,8 @@ var pidsGraph = {
             .append("text")
             .text( function(d){return d.y; } )
             .attr({
-                x: function (d) { return self.getLabelCoordinateX(d, scale.x(self.getDate(d.x))); },
-                y: function (d) { return self.getLabelCoordinateY(d, scale.y(d.y)); },
+                x: function (d) { return scale.x(self.getDate(d.x)) + d.modLabel.x; },
+                y: function (d) { return scale.y(d.y) + d.modLabel.y; },
                 "data-name": ds.entityid,
                 "text-anchor": function (d) { return d.modLabel.anchor },
                 "data-action": "dim",
@@ -255,7 +263,7 @@ var pidsGraph = {
         var lineFun = d3.svg.line()
           .x(function (d) { return scale.x(self.getDate(d.x)); })
           .y(function (d) { return scale.y(d.y); })
-          .interpolate("linear");
+          .interpolate("cardinal");
 
         
         var axis = this.getAxis(ds, svg, axisGenerators);
