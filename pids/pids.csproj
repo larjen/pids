@@ -95,9 +95,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\nvd3.css" />
-    <Content Include="d3-natural.html" />
-    <Content Include="demo-1.html" />
-    <Content Include="graph.js" />
+    <Content Include="trash\d3-natural.html" />
+    <Content Include="index.html" />
+    <Content Include="trash\graph.js" />
     <Content Include="images\android-desktop.png" />
     <Content Include="images\android-logo-white.png" />
     <Content Include="images\android-logo.png" />
@@ -129,7 +129,7 @@
     <Content Include="scripts\d3\d3.js" />
     <Content Include="scripts\d3\d3.min.js" />
     <Content Include="scripts\d3\LICENSE" />
-    <Content Include="cumulativeLineData.json" />
+    <Content Include="trash\cumulativeLineData.json" />
     <Content Include="pids_data.json" />
     <Content Include="README.md" />
     <None Include="Web.Debug.config">
@@ -140,12 +140,12 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="index.html" />
+    <Content Include="trash\index.html" />
     <Content Include="scripts\ai.0.15.0-build58334.js" />
     <Content Include="scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="images\user.jpg" />
     <Content Include="scripts\nvd3\nv.d3.min.js" />
-    <Content Include="styles.css" />
+    <Content Include="trash\styles.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
