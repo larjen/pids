@@ -291,7 +291,7 @@ var pidsGraph = {
         if (title[0][0] === null) {
 
         svg.append("text")
-            .attr('class','chart-title-'+this.chart[ds.chartid].svgid)
+            .attr('class','chart-title chart-title-'+this.chart[ds.chartid].svgid)
             .attr('text-anchor','start')
             .attr('transform','translate('+this.chart[ds.chartid].xStart+','+this.padding+')')
             .text(this.svg[this.chart[ds.chartid].svgid].title);
