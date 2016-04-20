@@ -4,7 +4,6 @@ This is the pilot for the datastore.
 
 ## todo
 
-* remove any height and width from json data file
 * Take into account redrawing when resizing window.
 * Prettify header, axis legends
 * Prettify table
@@ -13,6 +12,7 @@ This is the pilot for the datastore.
 
 ## done
 
+* remove any height and width from json data file
 * Beutify axis labels
 * axis ticks overlapping
 * Make the svg fill horizontal space completely
