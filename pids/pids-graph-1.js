@@ -145,10 +145,10 @@ var pidsGraph = {
             this.chart[ds.chartid].axis.y = svg.append("g")
                 .call(axisGenerators.y)
                 .attr("class", "y-axis y-axis-"+ds.chartid)
-                .attr("transform", "translate(" + this.padding + ",0)");
+                .attr("transform", "translate(" + this.chart[ds.chartid].xStart + ",0)");
                 
             svg.selectAll(".x-axis-"+ds.chartid+" text").attr({
-                "dy": this.padding/2
+                "dy": this.padding/1.5
             });
             
             svg.selectAll(".y-axis-"+ds.chartid+" text").attr({
@@ -272,8 +272,44 @@ var pidsGraph = {
                 "data-action": "dim",
                 class: "label-" + ds.entityid + " dim dim-" + ds.entityid
             });
+            
+           
 
         return labels;
+    },
+    addText: function(ds, svg, scale){
+
+        
+        console.log('addText',ds);
+        console.log('this.chart[ds.chartid]',this.chart[ds.chartid]);
+        
+        var title = d3.select(".chart-title-"+this.chart[ds.chartid].svgid);
+
+        console.log(title, ".chart-title-"+this.chart[ds.chartid].svgid);
+
+
+        if (title[0][0] === null) {
+
+        svg.append("text")
+            .attr('class','chart-title-'+this.chart[ds.chartid].svgid)
+            .attr('text-anchor','start')
+            .attr('transform','translate('+this.chart[ds.chartid].xStart+','+this.padding+')')
+            .text(this.svg[this.chart[ds.chartid].svgid].title);
+        
+        svg.append("text")
+            .attr('class','chart-yaxis-title-'+this.chart[ds.chartid].svgid)
+            .attr('text-anchor','middle')
+            .attr('transform','translate('+this.padding/2+',200)rotate(-90)')
+            .text(this.chart[ds.chartid].ylabel);
+            
+        }
+        
+        
+        
+            
+            //console.log(yaxislabel);                 'transform':'rotate(-90)',
+
+
     },
     drawLine: function (ds) {
 
@@ -310,7 +346,9 @@ var pidsGraph = {
 
         // add labels
         var labels = this.addLabels(ds, svg, scale);
-
+        
+        // add text explanations
+        var text = this.addText(ds, svg, scale);
     },
     calculateScales: function () {
 
@@ -361,7 +399,7 @@ var pidsGraph = {
         for (var i = 0; i < this.entityTypes.length; i++) {
 
             var tableContainer = $("#table-" + this.dataSet.entity[i].type);
-            var table = $('<table></table>').addClass("table table-bordered");
+            var table = $('<table></table>').addClass("table");
             var tableBody = $('<tbody></tbody>');
             var headerAdded = false;
 
@@ -379,7 +417,10 @@ var pidsGraph = {
                         var header = $('<thead></thead>');
                         var headerRow = $('<tr></tr>');
 
-                        // first add the entity type to the table
+                        // append the color legend
+                        headerRow.append('<th></th>');
+
+                        // add the entity type to the table
                         headerRow.append('<th>' + this.dataSet.entity[j].type + '</th>');
 
                         for (var k = 0; k < headerKeys.length; k++) {
@@ -391,10 +432,12 @@ var pidsGraph = {
                     }
 
                     // now add the row of data
-                    var dataRow = $('<tr class="dim dim-' + this.dataSet.entity[j].entityid + ' ' + this.getColorClassName(j) + '"></tr>');
+                    var dataRow = $('<tr class="dim dim-' + this.dataSet.entity[j].entityid + '"></tr>');
                     var keys = Object.keys(this.dataSet.entity[j].properties);
 
-                    // first add the entity name to the table
+                    dataRow.append('<td data-name="' + this.dataSet.entity[j].entityid + '" data-action="dim"><div data-name="' + this.dataSet.entity[j].entityid + '" data-action="dim" class="picker ' + this.getColorClassName(j) + '"></div></td>');
+                    
+                    // add the entity name to the table
                     dataRow.append('<td data-name="' + this.dataSet.entity[j].entityid + '" data-action="dim">' + this.dataSet.entity[j].name + '</td>');
                     for (var k = 0; k < keys.length; k++) {
                         //console.log("inserting " + dataSet.entity[j].properties[keys[k]]);
@@ -508,22 +551,21 @@ var pidsGraph = {
             this.svg[this.dataSet.svg[i].svgid] = this.dataSet.svg[i];
         }
     },
-    
     setSizes: function(){
         
         
-        console.log("this",this);
+        //console.log("this",this);
         // set height and width for all svg
         for (var i = 0; i < this.dataSet.chart.length ; i++) {
             this.svg[this.dataSet.chart[i].svgid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
             this.svg[this.dataSet.chart[i].svgid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
         }
         
-        console.log("this.svg",this.svg);
+        //console.log("this.svg",this.svg);
         
         // set toppadding for the chart
         for (var i = 0; i < this.chartId.length ; i++){
-            console.log("now calculating for",this.chartId[i]);
+            //console.log("now calculating for",this.chartId[i]);
 
             var slicetotal = this.chart[this.chartId[i]].slicetotal;
             var slicenumber = this.chart[this.chartId[i]].slicenumber;
@@ -531,27 +573,27 @@ var pidsGraph = {
             var isLast = (slicenumber == slicetotal );
 
 
-            console.log("isFirst",isFirst,"isLast", isLast);
+            //console.log("isFirst",isFirst,"isLast", isLast);
             
             
-            this.chart[this.chartId[i]].height = (this.svg[this.chart[this.chartId[i]].svgid].height  - 2 * this.padding ) / slicetotal;
-            this.chart[this.chartId[i]].width = (this.svg[this.chart[this.chartId[i]].svgid].width  - 2 * this.padding );
+            this.chart[this.chartId[i]].height = (this.svg[this.chart[this.chartId[i]].svgid].height  - 3 * this.padding ) / slicetotal;
+            this.chart[this.chartId[i]].width = (this.svg[this.chart[this.chartId[i]].svgid].width  - 3 * this.padding );
 
             
-            console.log("this.chart[this.chartId[i]].svgid",this.chart[this.chartId[i]].svgid);
-            console.log("this.svg[this.chart[this.chartId[i]].svgid].height",this.svg[this.chart[this.chartId[i]].svgid].height);
+            //console.log("this.chart[this.chartId[i]].svgid",this.chart[this.chartId[i]].svgid);
+            //console.log("this.svg[this.chart[this.chartId[i]].svgid].height",this.svg[this.chart[this.chartId[i]].svgid].height);
 
-            console.log("this.chart[this.chartId[i]].height",this.chart[this.chartId[i]].height);
+            //console.log("this.chart[this.chartId[i]].height",this.chart[this.chartId[i]].height);
 
-            this.chart[this.chartId[i]].yStart = this.padding + this.chart[this.chartId[i]].height * (slicenumber - 1);
-            this.chart[this.chartId[i]].yEnd = this.padding + this.chart[this.chartId[i]].height * slicenumber;
+            this.chart[this.chartId[i]].yStart = this.padding * 2 + this.chart[this.chartId[i]].height * (slicenumber - 1);
+            this.chart[this.chartId[i]].yEnd = this.padding * 2  + this.chart[this.chartId[i]].height * slicenumber;
             
-            this.chart[this.chartId[i]].xStart = this.padding;
-            this.chart[this.chartId[i]].xEnd = this.padding + this.chart[this.chartId[i]].width;
+            this.chart[this.chartId[i]].xStart = 2 * this.padding;
+            this.chart[this.chartId[i]].xEnd = 2 * this.padding + this.chart[this.chartId[i]].width;
 
 
-            console.log("yStart",this.chart[this.chartId[i]].yStart);
-            console.log("yEnd",this.chart[this.chartId[i]].yEnd);
+            //console.log("yStart",this.chart[this.chartId[i]].yStart);
+            //console.log("yEnd",this.chart[this.chartId[i]].yEnd);
             console.log("xStart",this.chart[this.chartId[i]].xStart);
             console.log("xEnd",this.chart[this.chartId[i]].xEnd);
 
@@ -566,11 +608,6 @@ var pidsGraph = {
         this.setActionHandlers();
         this.renderTable();
         this.renderGraphs();
-        
         console.log("this",this);
-        
-        
-        
-
     }
 }

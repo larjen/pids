@@ -4,6 +4,7 @@ This is the pilot for the datastore.
 
 ## todo
 
+* remove remnants of dataSet form charts, iterate of charids instead
 * Take into account redrawing when resizing window.
 * Prettify header, axis legends
 * Prettify table

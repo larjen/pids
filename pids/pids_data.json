@@ -658,8 +658,8 @@
     {
       "chartid": "mat-company",
       "svgid": "mat",
-      "x-label": "Month",
-      "y-label": "Evolution Index (MAT)",
+      "xlabel": "Month",
+      "ylabel": "Evolution Index (MAT)",
       "description": "KPI development - Company",
       "slicenumber": 1,
       "slicetotal": 2
@@ -667,8 +667,8 @@
     {
       "chartid": "mat-product",
       "svgid": "mat",
-      "x-label": "Month",
-      "y-label": "Evolution Index (MAT)",
+      "xlabel": "Month",
+      "ylabel": "Evolution Index (MAT)",
       "description": "KPI development - Product",
       "slicenumber": 2,
       "slicetotal": 2
@@ -676,8 +676,8 @@
     {
       "chartid": "marketshare-company",
       "svgid": "marketshare",
-      "x-label": "Month",
-      "y-label": "Marketshare %",
+      "xlabel": "Month",
+      "ylabel": "Marketshare %",
       "description": "Marketshare - company",
       "slicenumber": 1,
       "slicetotal": 2
@@ -685,8 +685,8 @@
     {
       "chartid": "marketshare-product",
       "svgid": "marketshare",
-      "x-label": "Month",
-      "y-label": "Marketshare %",
+      "xlabel": "Month",
+      "ylabel": "Marketshare %",
       "description": "Marketshare %",
       "slicenumber": 2,
       "slicetotal": 2
@@ -694,10 +694,13 @@
   ],
   "svg": [
     {
-      "svgid": "marketshare"
+      "svgid": "marketshare",
+      "title": "Marketshare"
     },
     {
-      "svgid": "mat"    }
+      "svgid": "mat",
+      "title": "KPI Development"
+    }
   ],
   "entity": [
     {
