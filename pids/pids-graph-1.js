@@ -6,12 +6,13 @@
  */
 
 var pidsGraph = {
-    dataSet: null,
+    dataSet: {},
     padding: 100,
-    entity: [], // list of all entities
+    entity: {}, // list of all entities
     entityTypes: [], // holds entity types
-    chart: [], // a collection of charts
-    svg: [], // holds svg
+    chartId: [], // an array of chart ids
+    chart: {}, // a collection of charts
+    svg: {}, // holds svg
     getColorClassName: function(number){
         // gets a code for a specific color
         return "color-"+number % 9;
@@ -349,7 +350,7 @@ var pidsGraph = {
                         headerRow.append('<th>' + this.dataSet.entity[j].type + '</th>');
 
                         for (var k = 0; k < headerKeys.length; k++) {
-                            console.log("inserting " + headerKeys[k]);
+                            //console.log("inserting " + headerKeys[k]);
                             headerRow.append('<th>' + headerKeys[k] + '</th>');
                         }
                         header.append(headerRow);
@@ -451,6 +452,11 @@ var pidsGraph = {
         // get all charts
         for (var i = 0; i < this.dataSet.chart.length; i++) {
             this.chart[this.dataSet.chart[i].chartid] = this.dataSet.chart[i];
+            
+            // also add this to chartId keys if not already present
+            this.chartId.push(this.dataSet.chart[i].chartid);
+
+            
         }
 
         // enrich all chart data with label positions so labels are placed
@@ -479,6 +485,11 @@ var pidsGraph = {
             this.chart[this.dataSet.chart[i].chartid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
             this.chart[this.dataSet.chart[i].chartid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
         }
+        
+        // set toppadding for the chart
+        for (var i = 0; i < this.chart.length ; i++){
+            console.log(i);
+        }
 
 
     },
@@ -490,6 +501,12 @@ var pidsGraph = {
         this.renderTable();
         this.renderGraphs();
         
-        console.log(this);
+        console.log(this, this.chart.length);
+        console.log("this.chart.lenght",this.chart.length);
+        console.log("Object.keys(this.chart).length",Object.keys(this.chart).length);
+        
+        
+        
+
     }
 }
