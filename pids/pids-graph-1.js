@@ -280,12 +280,12 @@ var pidsGraph = {
     addText: function(ds, svg, scale){
 
         
-        console.log('addText',ds);
-        console.log('this.chart[ds.chartid]',this.chart[ds.chartid]);
+        //console.log('addText',ds);
+        //console.log('this.chart[ds.chartid]',this.chart[ds.chartid]);
         
         var title = d3.select(".chart-title-"+this.chart[ds.chartid].svgid);
 
-        console.log(title, ".chart-title-"+this.chart[ds.chartid].svgid);
+        //console.log(title, ".chart-title-"+this.chart[ds.chartid].svgid);
 
 
         if (title[0][0] === null) {
@@ -594,8 +594,8 @@ var pidsGraph = {
 
             //console.log("yStart",this.chart[this.chartId[i]].yStart);
             //console.log("yEnd",this.chart[this.chartId[i]].yEnd);
-            console.log("xStart",this.chart[this.chartId[i]].xStart);
-            console.log("xEnd",this.chart[this.chartId[i]].xEnd);
+            //console.log("xStart",this.chart[this.chartId[i]].xStart);
+            //console.log("xEnd",this.chart[this.chartId[i]].xEnd);
 
         }
 
