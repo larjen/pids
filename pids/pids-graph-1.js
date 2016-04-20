@@ -7,7 +7,7 @@
 
 var pidsGraph = {
     dataSet: {},
-    padding: 100,
+    padding: 50,
     entity: {}, // list of all entities
     entityTypes: [], // holds entity types
     chartId: [], // an array of chart ids
@@ -56,8 +56,8 @@ var pidsGraph = {
 
             // create the svg to hold the graph and return the svg
             svg = d3.select("#svg-container-" + svgid).append("svg").attr({
-                width: this.chart[ds.chartid].width,
-                height: this.chart[ds.chartid].height,
+                width: this.svg[svgid].width,
+                height: this.svg[svgid].height,
                 id: "svg-" + svgid,
                 "data-action":"dim"
             });
@@ -71,7 +71,10 @@ var pidsGraph = {
                 this.chart[ds.chartid].xMin,
                 this.chart[ds.chartid].xMax
             ])
-            .range([this.padding, this.chart[ds.chartid].width - this.padding])
+            .range([
+                this.chart[ds.chartid].xStart, 
+                this.chart[ds.chartid].xEnd
+                ])
             .nice();
             
             var yScale = d3.scale.linear()
@@ -80,8 +83,8 @@ var pidsGraph = {
                     this.chart[ds.chartid].yMax
                 ])
                 .range([
-                    this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding,
-                    this.chart[ds.chartid].yrangemin + this.chart[ds.chartid].yrangeminpadding,
+                    this.chart[ds.chartid].yEnd, 
+                    this.chart[ds.chartid].yStart
                 ])
                 .nice();
 
@@ -92,13 +95,43 @@ var pidsGraph = {
     getAxisGenerators: function (ds, scale) {
         if (this.isLastSlice(ds)) {
             return {
-                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.chart[ds.chartid].width + 2 * this.padding).outerTickSize(0),
-                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%B %y")).innerTickSize(-(this.chart[ds.chartid].height / 2) + this.padding).outerTickSize(0)
+                y: d3.svg.axis()
+                    .scale(scale.y)
+                    .orient("left")
+                    .ticks(4)
+                    .innerTickSize([
+                        -this.chart[ds.chartid].width
+                    ])
+                    .outerTickSize(0),
+                x: d3.svg.axis()
+                    .scale(scale.x)
+                    .orient("bottom")
+                    .ticks(6)
+                    .tickFormat(d3.time.format("%B %y"))
+                    .innerTickSize([
+                        -this.chart[ds.chartid].height
+                    ])
+                    .outerTickSize(0)
             };
         } else {
             return {
-                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.chart[ds.chartid].width + 2 * this.padding).outerTickSize(0),
-                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat("").innerTickSize(-(this.chart[ds.chartid].height / 2) + this.padding).outerTickSize(0)
+                y: d3.svg.axis()
+                .scale(scale.y)
+                .orient("left")
+                .ticks(4)
+                .innerTickSize([
+                    -this.chart[ds.chartid].width
+                ])
+                .outerTickSize(0),
+                x: d3.svg.axis()
+                .scale(scale.x)
+                .orient("bottom")
+                .ticks(6)
+                .tickFormat("")
+                .innerTickSize([
+                    -this.chart[ds.chartid].height
+                ])
+                .outerTickSize(0)
             };
         }
     },
@@ -108,7 +141,7 @@ var pidsGraph = {
             this.chart[ds.chartid].axis.x = svg.append("g")
                 .call(axisGenerators.x)
                 .attr("class", "x-axis x-axis-"+ds.chartid)
-                .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
+                .attr("transform", "translate(0," + this.chart[ds.chartid].yEnd + ")");
             this.chart[ds.chartid].axis.y = svg.append("g")
                 .call(axisGenerators.y)
                 .attr("class", "y-axis y-axis-"+ds.chartid)
@@ -455,8 +488,6 @@ var pidsGraph = {
             
             // also add this to chartId keys if not already present
             this.chartId.push(this.dataSet.chart[i].chartid);
-
-            
         }
 
         // enrich all chart data with label positions so labels are placed
@@ -479,16 +510,51 @@ var pidsGraph = {
     },
     
     setSizes: function(){
-
-        // set height and width for all charts
+        
+        
+        console.log("this",this);
+        // set height and width for all svg
         for (var i = 0; i < this.dataSet.chart.length ; i++) {
-            this.chart[this.dataSet.chart[i].chartid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
-            this.chart[this.dataSet.chart[i].chartid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
+            this.svg[this.dataSet.chart[i].svgid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
+            this.svg[this.dataSet.chart[i].svgid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
         }
         
+        console.log("this.svg",this.svg);
+        
         // set toppadding for the chart
-        for (var i = 0; i < this.chart.length ; i++){
-            console.log(i);
+        for (var i = 0; i < this.chartId.length ; i++){
+            console.log("now calculating for",this.chartId[i]);
+
+            var slicetotal = this.chart[this.chartId[i]].slicetotal;
+            var slicenumber = this.chart[this.chartId[i]].slicenumber;
+            var isFirst = (slicenumber == 1 );
+            var isLast = (slicenumber == slicetotal );
+
+
+            console.log("isFirst",isFirst,"isLast", isLast);
+            
+            
+            this.chart[this.chartId[i]].height = (this.svg[this.chart[this.chartId[i]].svgid].height  - 2 * this.padding ) / slicetotal;
+            this.chart[this.chartId[i]].width = (this.svg[this.chart[this.chartId[i]].svgid].width  - 2 * this.padding );
+
+            
+            console.log("this.chart[this.chartId[i]].svgid",this.chart[this.chartId[i]].svgid);
+            console.log("this.svg[this.chart[this.chartId[i]].svgid].height",this.svg[this.chart[this.chartId[i]].svgid].height);
+
+            console.log("this.chart[this.chartId[i]].height",this.chart[this.chartId[i]].height);
+
+            this.chart[this.chartId[i]].yStart = this.padding + this.chart[this.chartId[i]].height * (slicenumber - 1);
+            this.chart[this.chartId[i]].yEnd = this.padding + this.chart[this.chartId[i]].height * slicenumber;
+            
+            this.chart[this.chartId[i]].xStart = this.padding;
+            this.chart[this.chartId[i]].xEnd = this.padding + this.chart[this.chartId[i]].width;
+
+
+            console.log("yStart",this.chart[this.chartId[i]].yStart);
+            console.log("yEnd",this.chart[this.chartId[i]].yEnd);
+            console.log("xStart",this.chart[this.chartId[i]].xStart);
+            console.log("xEnd",this.chart[this.chartId[i]].xEnd);
+
         }
 
 
@@ -501,9 +567,7 @@ var pidsGraph = {
         this.renderTable();
         this.renderGraphs();
         
-        console.log(this, this.chart.length);
-        console.log("this.chart.lenght",this.chart.length);
-        console.log("Object.keys(this.chart).length",Object.keys(this.chart).length);
+        console.log("this",this);
         
         
         

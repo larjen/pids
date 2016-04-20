@@ -662,11 +662,7 @@
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Company",
       "slicenumber": 1,
-      "slicetotal": 2,
-      "yrangemax": 200,
-      "yrangemin": 0,
-      "yrangemaxpadding": 0,
-      "yrangeminpadding": 50
+      "slicetotal": 2
     },
     {
       "chartid": "mat-product",
@@ -675,11 +671,7 @@
       "y-label": "Evolution Index (MAT)",
       "description": "KPI development - Product",
       "slicenumber": 2,
-      "slicetotal": 2,
-      "yrangemax": 400,
-      "yrangemin": 200,
-      "yrangemaxpadding": -50,
-      "yrangeminpadding": 0
+      "slicetotal": 2
     },
     {
       "chartid": "marketshare-company",
@@ -688,11 +680,7 @@
       "y-label": "Marketshare %",
       "description": "Marketshare - company",
       "slicenumber": 1,
-      "slicetotal": 2,
-      "yrangemax": 200,
-      "yrangemin": 0,
-      "yrangemaxpadding": 0,
-      "yrangeminpadding": 50
+      "slicetotal": 2
     },
     {
       "chartid": "marketshare-product",
@@ -701,19 +689,15 @@
       "y-label": "Marketshare %",
       "description": "Marketshare %",
       "slicenumber": 2,
-      "slicetotal": 2,
-      "yrangemax": 400,
-      "yrangemin": 200,
-      "yrangemaxpadding": -50,
-      "yrangeminpadding": 0
+      "slicetotal": 2
     }
   ],
   "svg": [
     {
-      "svgid": "marketshare-svg"
+      "svgid": "marketshare"
     },
     {
-      "svgid": "mat-svg"    }
+      "svgid": "mat"    }
   ],
   "entity": [
     {
