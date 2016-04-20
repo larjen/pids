@@ -6,6 +6,8 @@ This is the pilot for the datastore.
 
 * remove any height and width from json data file
 * Take into account redrawing when resizing window.
+* Prettify header, axis legends
+* Prettify table
 * Test with different data.
 
 

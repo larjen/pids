@@ -7,15 +7,7 @@
 
 var pidsGraph = {
     dataSet: null,
-    width: [], // chart widths
-    height: [], // chart heights
-    padding: 50,
-    scales: [], // holds the calculated scales
-    xMin: [],
-    yMin: [],
-    xMax: [],
-    yMax: [],
-    axis: [],
+    padding: 100,
     entity: [], // list of all entities
     entityTypes: [], // holds entity types
     chart: [], // a collection of charts
@@ -63,27 +55,28 @@ var pidsGraph = {
 
             // create the svg to hold the graph and return the svg
             svg = d3.select("#svg-container-" + svgid).append("svg").attr({
-                width: this.width[ds.chartid],
-                height: this.height[ds.chartid],
-                id: "svg-" + svgid
+                width: this.chart[ds.chartid].width,
+                height: this.chart[ds.chartid].height,
+                id: "svg-" + svgid,
+                "data-action":"dim"
             });
         }
         return svg;
     },
     getScales: function(ds){
-        if (this.scales[ds.chartid] === undefined) {
+        if (this.chart[ds.chartid].scales === undefined) {
             var xScale = d3.time.scale()
             .domain([
-                this.xMin[ds.chartid],
-                this.xMax[ds.chartid]
+                this.chart[ds.chartid].xMin,
+                this.chart[ds.chartid].xMax
             ])
-            .range([this.padding, this.width[ds.chartid] - this.padding])
+            .range([this.padding, this.chart[ds.chartid].width - this.padding])
             .nice();
             
             var yScale = d3.scale.linear()
                 .domain([
-                    this.yMin[ds.chartid],
-                    this.yMax[ds.chartid]
+                    this.chart[ds.chartid].yMin,
+                    this.chart[ds.chartid].yMax
                 ])
                 .range([
                     this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding,
@@ -91,31 +84,31 @@ var pidsGraph = {
                 ])
                 .nice();
 
-            this.scales[ds.chartid] = { x: xScale, y: yScale };
+            this.chart[ds.chartid].scales = { x: xScale, y: yScale };
         }
-        return this.scales[ds.chartid];
+        return this.chart[ds.chartid].scales;
     },
     getAxisGenerators: function (ds, scale) {
         if (this.isLastSlice(ds)) {
             return {
-                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.width[ds.chartid] + 2 * this.padding).outerTickSize(0),
-                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%B %y")).innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
+                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.chart[ds.chartid].width + 2 * this.padding).outerTickSize(0),
+                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat(d3.time.format("%B %y")).innerTickSize(-(this.chart[ds.chartid].height / 2) + this.padding).outerTickSize(0)
             };
         } else {
             return {
-                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.width[ds.chartid] + 2 * this.padding).outerTickSize(0),
-                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat("").innerTickSize(-(this.height[ds.chartid] / 2) + this.padding).outerTickSize(0)
+                y: d3.svg.axis().scale(scale.y).orient("left").ticks(4).innerTickSize(-this.chart[ds.chartid].width + 2 * this.padding).outerTickSize(0),
+                x: d3.svg.axis().scale(scale.x).orient("bottom").ticks(6).tickFormat("").innerTickSize(-(this.chart[ds.chartid].height / 2) + this.padding).outerTickSize(0)
             };
         }
     },
     getAxis: function(ds, svg, axisGenerators){
-        if (this.axis[ds.chartid] === undefined) {
-            this.axis[ds.chartid] = {};
-            this.axis[ds.chartid].x = svg.append("g")
+        if (this.chart[ds.chartid].axis === undefined) {
+            this.chart[ds.chartid].axis = {};
+            this.chart[ds.chartid].axis.x = svg.append("g")
                 .call(axisGenerators.x)
                 .attr("class", "x-axis x-axis-"+ds.chartid)
                 .attr("transform", "translate(0," + (this.chart[ds.chartid].yrangemax + this.chart[ds.chartid].yrangemaxpadding) + ")");
-            this.axis[ds.chartid].y = svg.append("g")
+            this.chart[ds.chartid].axis.y = svg.append("g")
                 .call(axisGenerators.y)
                 .attr("class", "y-axis y-axis-"+ds.chartid)
                 .attr("transform", "translate(" + this.padding + ",0)");
@@ -132,7 +125,7 @@ var pidsGraph = {
             lastXTick.remove();
 
             var lastYTick = d3.select( svg.selectAll(".y-axis-"+ds.chartid+" text")[0].shift() );
-            console.log("lastYtick",lastYTick);
+            //console.log("lastYtick",lastYTick);
             lastYTick.remove();
 
         }
@@ -178,15 +171,16 @@ var pidsGraph = {
     },
     addLabelPosition: function (ds) {
 
-        console.log('lpos called', ds);
+        //console.log('lpos called', ds);
 
         var calY = 20; // the y shift
         var calX = 5; // the x shift
 
         for (var i = 0; i < ds.data.length ; i++) {
-            var prevY = null;
-            var nextY = null;
+
             var thisY = ds.data[i].y;
+            var prevY = thisY;
+            var nextY = thisY;
             if (i > 0) {
                 prevY = ds.data[i - 1].y;
             }
@@ -194,14 +188,13 @@ var pidsGraph = {
                 nextY = ds.data[i + 1].y;
             }
 
-            console.log('lpos', prevY, nextY, thisY);
-
+            //console.log('lpos', prevY, nextY, thisY);
             if (
                 prevY > thisY && nextY > thisY ||
                 prevY > thisY && nextY == thisY ||
                 prevY == thisY && nextY > thisY
                 ) {
-                console.log("downcenter");
+                //console.log("downcenter");
                 ds.data[i].modLabel = { "x": 0, "y": calY, "anchor": "middle" };
             }
 
@@ -211,21 +204,21 @@ var pidsGraph = {
                 prevY < thisY && nextY == thisY ||
                 prevY < thisY && nextY < thisY
                 ) {
-                console.log("upcenter");
+                //console.log("upcenter");
                 ds.data[i].modLabel = { "x": 0, "y": -calY/3, "anchor": "middle" };
             }
 
             if (
                 prevY > thisY && nextY < thisY 
                 ) {
-                console.log("upright");
+                //console.log("upright");
                 ds.data[i].modLabel = { "x": calX, "y": -calY/3, "anchor": "start" };
             }
 
             if (
                 prevY < thisY && nextY > thisY
                 ) {
-                console.log("downright");
+                //console.log("downright");
                 ds.data[i].modLabel = { "x": calX, "y": calY, "anchor": "start" };
             }
         }
@@ -311,19 +304,19 @@ var pidsGraph = {
             //console.log("chartData[i]", chartData[chartIds[i]]);
             //console.log("MIN y " + chartIds[i], d3.min(chartData[chartIds[i]], function (d) { return d.y; }));
 
-            this.yMin[chartIds[i]] = d3.min(chartData[chartIds[i]], function (d) { return d.y; });
+            this.chart[chartIds[i]].yMin = d3.min(chartData[chartIds[i]], function (d) { return d.y; });
 
             //console.log("MAX y " + chartIds[i], d3.max(chartData[chartIds[i]], function (d) { return d.y; }));
 
-            this.yMax[chartIds[i]] = d3.max(chartData[chartIds[i]], function (d) { return d.y; });
+            this.chart[chartIds[i]].yMax = d3.max(chartData[chartIds[i]], function (d) { return d.y; });
 
             //console.log("MIN x " + chartIds[i], this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; })));
 
-            this.xMin[chartIds[i]] = this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; }));
+            this.chart[chartIds[i]].xMin = this.getDate(d3.min(chartData[chartIds[i]], function (d) { return d.x; }));
 
             //console.log("MAX x "+chartIds[i], this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; })));
 
-            this.xMax[chartIds[i]] = this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; }));
+            this.chart[chartIds[i]].xMax = this.getDate(d3.max(chartData[chartIds[i]], function (d) { return d.x; }));
         };
     },
     renderTable: function(){
@@ -466,7 +459,7 @@ var pidsGraph = {
             this.addLabelPosition(this.dataSet.datasets[i]);
         }
 
-        console.log(this.dataSet.datasets);
+        //console.log(this.dataSet.datasets);
 
         // get all entities
             for (var i = 0; i < this.dataSet.entity.length; i++) {
@@ -477,19 +470,26 @@ var pidsGraph = {
         for (var i = 0; i < this.dataSet.svg.length; i++) {
             this.svg[this.dataSet.svg[i].svgid] = this.dataSet.svg[i];
         }
+    },
+    
+    setSizes: function(){
 
         // set height and width for all charts
         for (var i = 0; i < this.dataSet.chart.length ; i++) {
-            this.height[this.dataSet.chart[i].chartid] = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
-            this.width[this.dataSet.chart[i].chartid] = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
+            this.chart[this.dataSet.chart[i].chartid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
+            this.chart[this.dataSet.chart[i].chartid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
         }
+
 
     },
     render: function (dataSet) {
         this.initializeDataSet(dataSet);
+        this.setSizes();
         this.setStylesheet();
         this.setActionHandlers();
         this.renderTable();
         this.renderGraphs();
+        
+        console.log(this);
     }
 }
