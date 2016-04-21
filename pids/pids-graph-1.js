@@ -53,13 +53,18 @@ var pidsGraph = {
         var svg = d3.select("svg#svg-" + svgid);
 
         if (svg[0][0] === null) {
+            
+            
 
             // create the svg to hold the graph and return the svg
-            svg = d3.select("#svg-container-" + svgid).append("svg").attr({
-                width: this.svg[svgid].width,
-                height: this.svg[svgid].height,
-                id: "svg-" + svgid,
-                "data-action":"dim"
+            svg = d3.select("#svg-container-" + svgid)
+                .classed("svg-container",true)
+                .append("svg")
+                .attr("preserveAspectRatio","xMinYMin meet")
+                .attr("viewBox","0 0 "+this.svg[svgid].width+" "+this.svg[svgid].height)
+                .attr({
+                    id: "svg-" + svgid,
+                    "data-action":"dim"
             });
         }
         return svg;
@@ -93,12 +98,14 @@ var pidsGraph = {
         return this.chart[ds.chartid].scales;
     },
     getAxisGenerators: function (ds, scale) {
+        var self = this;
         if (this.isLastSlice(ds)) {
             return {
                 y: d3.svg.axis()
                     .scale(scale.y)
                     .orient("left")
                     .ticks(4)
+                    .tickFormat(function(d){return d+self.chart[ds.chartid].yTickDenomination;})
                     .innerTickSize([
                         -this.chart[ds.chartid].width
                     ])
@@ -119,6 +126,7 @@ var pidsGraph = {
                 .scale(scale.y)
                 .orient("left")
                 .ticks(4)
+                .tickFormat(function(d){return d+self.chart[ds.chartid].yTickDenomination;})
                 .innerTickSize([
                     -this.chart[ds.chartid].width
                 ])
@@ -557,11 +565,15 @@ var pidsGraph = {
         //console.log("this",this);
         // set height and width for all svg
         for (var i = 0; i < this.dataSet.chart.length ; i++) {
-            this.svg[this.dataSet.chart[i].svgid].height = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
+            var h = $("#svg-container-" + this.dataSet.chart[i].svgid).height();
+            if (h<400){
+                h = 400;
+            }
+            this.svg[this.dataSet.chart[i].svgid].height = h;
             this.svg[this.dataSet.chart[i].svgid].width = $("#svg-container-" + this.dataSet.chart[i].svgid).width();
         }
         
-        //console.log("this.svg",this.svg);
+        console.log("height width calculated this.svg",this.svg);
         
         // set toppadding for the chart
         for (var i = 0; i < this.chartId.length ; i++){

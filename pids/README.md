@@ -4,15 +4,14 @@ This is the pilot for the datastore.
 
 ## todo
 
-* remove remnants of dataSet form charts, iterate of charids instead
-* Take into account redrawing when resizing window.
-* Prettify header, axis legends
-* Prettify table
+* prettify hover data
 * Test with different data.
-
 
 ## done
 
+* Take into account redrawing when resizing window.
+* Prettify header, axis legends
+* Prettify table
 * remove any height and width from json data file
 * Beutify axis labels
 * axis ticks overlapping
@@ -25,3 +24,7 @@ This is the pilot for the datastore.
 * add labels to the charts
 * Make all dots work
 * Only create one axis per chart
+
+## rejected
+
+* remove remnants of dataSet form charts, iterate of charids instead 

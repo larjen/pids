@@ -660,6 +660,8 @@
       "svgid": "mat",
       "xlabel": "Month",
       "ylabel": "Evolution Index (MAT)",
+      "xTickDenomination":"",
+      "yTickDenomination":"",
       "description": "KPI development - Company",
       "slicenumber": 1,
       "slicetotal": 2
@@ -669,6 +671,8 @@
       "svgid": "mat",
       "xlabel": "Month",
       "ylabel": "Evolution Index (MAT)",
+      "xTickDenomination":"",
+      "yTickDenomination":"",
       "description": "KPI development - Product",
       "slicenumber": 2,
       "slicetotal": 2
@@ -678,6 +682,8 @@
       "svgid": "marketshare",
       "xlabel": "Month",
       "ylabel": "Marketshare %",
+      "xTickDenomination":"",
+      "yTickDenomination":" %",
       "description": "Marketshare - company",
       "slicenumber": 1,
       "slicetotal": 2
@@ -687,6 +693,8 @@
       "svgid": "marketshare",
       "xlabel": "Month",
       "ylabel": "Marketshare %",
+      "xTickDenomination":"",
+      "yTickDenomination":" %",
       "description": "Marketshare %",
       "slicenumber": 2,
       "slicetotal": 2
