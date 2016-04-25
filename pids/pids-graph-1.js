@@ -459,7 +459,7 @@ var pidsGraph = {
             tableContainer.append(table);
         }
     },
-    setStylesheet(dataSet) {
+    setStylesheet: function(dataSet) {
 
         var styleEl = document.createElement('style');
         var styleSheet;
