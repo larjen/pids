@@ -222,3 +222,42 @@ body {
     color: #333333;
     text-decoration: underline;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #14133b;
+    border-color: #14133b;
+}
+
+h1, h2 {
+    font-size: 25px;
+    font-family: 'Alfa Slab One', cursive;
+    text-transform: capitalize;
+    color: #14133b;
+}
+.infobar {
+    float: right;
+    margin: 0px;
+}
+.infobar li  {
+    line-height: 75px;
+    list-style: none;
+    float: left;
+    padding-left: 5px;
+
+}
+
+#navbar ul.infobar li a {
+    line-height: 17px;
+    margin-top: 20px;
+    display: block;
+    color: #aaa;
+}
+
+#navbar ul.infobar li a:hover {
+    color: #333333;
+    text-decoration: none;
+}
+.dataset.table>tbody>tr>td {
+    line-height: 40px;
+}

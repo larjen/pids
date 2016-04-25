@@ -52,71 +52,39 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>
-    
-    <div class="selector">
-    <div class="container graph" style="margin-top: 80px;">
-        <div class="row" style="margin-bottom: 20px;">
-            <div class="col-md-4">
-                <label for="companyName">Company Name</label>
-                <input id="companyName" type="text" class="form-control" value="WEYLAND-YUTANI">
-            </div>
-            <div class="col-md-4">
-                <label for="atCode">AT-code</label>
-                <select id="atCode" class="form-control">
-                    <option>201</option>
-                    <option>202</option>
-                    <option>203</option>
-                    <option>204</option>
-                    <option>205</option>
-                </select>
-            </div>
-            <div class="col-md-4">
-                <label for="geoRegion">Geographical region</label>
-                <select id="geoRegion" class="form-control">
-                    <option>EMEA</option>
-                    <option>NA</option>
-                    <option>SA</option>
-                    <option>BRICS</option>
-                    <option>MENA</option>
-                </select>
+    <div class="container" style="margin-top: 80px;">
+        <div class="row">
+            <div class="col-sm-offset-1 col-sm-10 col-md-offset-3 col-md-6">
+                
+                <h1>Account</h1>
+                <p>Manage your account info.</p>
+                
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="Email" />
+                </div>
+                <div class="form-group">
+                    <label for="pwd">Change Password</label>
+                    <input type="password" class="form-control" id="pwd" placeholder="Pasword" />
+                </div>
+                <div class="form-group">
+                    <label for="pwd2">Change Password (repeat)</label>
+                    <input type="password" class="form-control" id="pwd2" placeholder="Pasword (repeat)" />
+                </div>
+                <div class="form-group">
+                    <label for="a1">First Name</label>
+                    <input type="text" class="form-control" id="a1" placeholder="First Name" />
+                </div>
+                <div class="form-group">
+                    <label for="a2">Last Name</label>
+                    <input type="text" class="form-control" id="a2" placeholder="Last Name" />
+                </div>
+                <div class="form-group pull-right">
+                    <a href="welcome.html" class="btn btn-primary">Update</a>
+                </div>
+
             </div>
         </div>
     </div>
-    </div>
-
-    <div class="container graph">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive" id="table-company">
-
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="table-responsive" id="table-product">
-
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="svg-container-marketshare">
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12" id="svg-container-mat">
-
-            </div>
-        </div>
-    <script>
-        $.ajax({
-            dataType: "json",
-            url: "pids_data.json",
-            success: function (data, textStatus, jqXHR) {
-                pidsGraph.render(data);
-            }
-        });
-    </script>
 </body>
 </html>
