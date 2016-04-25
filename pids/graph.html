@@ -1,0 +1,117 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- include jQuery-->
+    <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- custom overrides for CSS -->
+    <link rel="stylesheet" href="css/pids.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- include d3 script -->
+    <script src="scripts/d3/d3.min.js" charset="utf-8"></script>
+
+    <!-- include the graph script  -->
+    <script src="pids-graph-1.js" charset="utf-8"></script>
+
+    <!-- Load the correct json and pass it to the script above -->
+
+</head>
+<body data-action="dim">
+
+    <nav class="navbar navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <div data-svg-src="images/logo_big.svg" style="height: 40px; width: 130px; min-height: 40px; min-width: 130px; background-image: url(&quot;images/logo_big.svg&quot;); background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;"></div>                    
+                </a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </nav>
+    
+    <div class="selector">
+    <div class="container graph" style="margin-top: 80px;">
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="col-md-4">
+                <label for="companyName">Company Name</label>
+                <input id="companyName" type="text" class="form-control" value="WEYLAND-YUTANI">
+            </div>
+            <div class="col-md-4">
+                <label for="atCode">AT-code</label>
+                <select id="atCode" class="form-control">
+                    <option>201</option>
+                    <option>202</option>
+                    <option>203</option>
+                    <option>204</option>
+                    <option>205</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label for="geoRegion">Geographical region</label>
+                <select id="geoRegion" class="form-control">
+                    <option>EMEA</option>
+                    <option>NA</option>
+                    <option>SA</option>
+                    <option>BRICS</option>
+                    <option>MENA</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="container graph">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive" id="table-company">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive" id="table-product">
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="svg-container-marketshare">
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" id="svg-container-mat">
+
+            </div>
+        </div>
+    <script>
+        $.ajax({
+            dataType: "json",
+            url: "pids_data.json",
+            success: function (data, textStatus, jqXHR) {
+                pidsGraph.render(data);
+            }
+        });
+    </script>
+</body>
+</html>
