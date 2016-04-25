@@ -4,16 +4,16 @@ This is the pilot for the datastore.
 
 ## todo
 
-* create the mockup
-    * login page
-    * data overview page
-    * account page
-    * graph page
 * prettify hover data
 * Test with different data.
 
 ## done
 
+* create the mockup
+    * login page
+    * data overview page
+    * account page
+    * graph page
 * Take into account redrawing when resizing window.
 * Prettify header, axis legends
 * Prettify table
