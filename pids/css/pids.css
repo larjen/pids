@@ -1,0 +1,148 @@
+
+        .y-axis path,
+        .x-axis path,
+        .y-axis line,
+        .x-axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .y-axis text,
+        .x-axis text {
+        }
+
+        div.tooltip {
+            position: absolute;
+            max-width: 200px;
+            height: auto;
+            padding: 5px;
+            background-color: yellow;
+            border-radius: 5px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+            pointer-events: none;
+            font-size: 10px;
+        }
+        
+        div.picker {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .chart-title {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        /* colors */
+
+        .color-0 {
+            stroke: #1B8F64;
+            color: #1B8F64;
+            background-color: #1B8F64;
+
+        }
+
+        .color-1 {
+            stroke: #CF4A09;
+            color: #CF4A09;
+            background-color: #CF4A09;
+
+        }
+
+        .color-2 {
+            stroke: #5F5AA5;
+            color: #5F5AA5;
+            background-color: #5F5AA5;
+
+        }
+
+        .color-3 {
+            stroke: #DE0177;
+            color: #DE0177;
+            background-color: #DE0177;
+
+        }
+
+        .color-4 {
+            stroke: #57991A;
+            color: #57991A;
+            background-color: #57991A;
+
+        }
+
+
+        .color-5 {
+            stroke: #DF9C0A;
+            color: #DF9C0A;
+            background-color: #DF9C0A;
+
+        }
+
+        .color-6 {
+            stroke: #956216;
+            color: #956216;
+            background-color: #956216;
+
+        }
+
+        .color-7 {
+            stroke: #515451;
+            color: #515451;
+            background-color: #515451;
+
+        }
+
+        .color-8 {
+            stroke: #2B57A3;
+            color: #2B57A3;
+            background-color: #2B57A3;
+
+        }
+
+        .color-9 {
+            stroke: #FC6A0B;
+            color: #FC6A0B;
+            background-color: #FC6A0B;
+
+        }
+
+        td[data-action="dim"],
+        path[data-action="dim"],
+        circle[data-action="dim"],
+        text[data-action="dim"] {
+            cursor: pointer;
+        }
+
+        .x-axis, 
+        .y-axis,
+        .x-axis line,
+        .y-axis line,
+        .x-axis .domain,
+        .y-axis .domain {
+            stroke: #aaa;
+        }
+        .x-axis text,
+        .y-axis text {
+            fill: #000000;
+            stroke: none;
+        }
+        
+        /* responsive svg */
+        
+        .svg-container {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 100%;
+            /*padding-bottom: 100%;*/
+            vertical-align: top;
+            overflow: hidden;
+        }
+        
+        .svg-content-responsive {
+            display: inline-block;
+            position: absolute;
+            top: 10px;
+            left: 0;
+        }

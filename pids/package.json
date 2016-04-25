@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/larjen/pids#readme",
   "dependencies": {
+    "chokidar": "^1.4.3",
     "material-design-lite": "^1.1.3"
   },
   "devDependencies": {
